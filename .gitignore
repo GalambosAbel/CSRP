@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+# NOT PART OF DEFAULT
+
+#Pickle data (unzipped is too large)
+*.pkl
