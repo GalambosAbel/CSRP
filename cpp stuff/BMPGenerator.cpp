@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include "BMPGenerator.h"
 
-void BMPGenerator::generateBitmapImage (unsigned char* image, int height, int width, char* imageFileName, int bitDepth)
+void BMPGenerator::generateBitmapImage (unsigned char* image, int height, int width, char* imageFileName, int bytesPerPixel)
 {
-    int widthInBytes = width * bitDepth;
+    int widthInBytes = width * bytesPerPixel;
 
     unsigned char padding[3] = {0, 0, 0};
     int paddingSize = (4 - (widthInBytes) % 4) % 4;
@@ -15,12 +15,12 @@ void BMPGenerator::generateBitmapImage (unsigned char* image, int height, int wi
     unsigned char* fileHeader = createBitmapFileHeader(height, stride);
     fwrite(fileHeader, 1, FILE_HEADER_SIZE, imageFile);
 
-    unsigned char* infoHeader = createBitmapInfoHeader(height, width, bitDepth);
+    unsigned char* infoHeader = createBitmapInfoHeader(height, width, bytesPerPixel);
     fwrite(infoHeader, 1, INFO_HEADER_SIZE, imageFile);
 
     int i;
     for (i = 0; i < height; i++) {
-        fwrite(image + (i*widthInBytes), bitDepth, width, imageFile);
+        fwrite(image + (i*widthInBytes), bytesPerPixel, width, imageFile);
         fwrite(padding, 1, paddingSize, imageFile);
     }
 
@@ -49,7 +49,7 @@ unsigned char* BMPGenerator::createBitmapFileHeader (int height, int stride)
     return fileHeader;
 }
 
-unsigned char* BMPGenerator::createBitmapInfoHeader (int height, int width, int bitDepth)
+unsigned char* BMPGenerator::createBitmapInfoHeader (int height, int width, int bytesPerPixel)
 {
     static unsigned char infoHeader[] = {
         0,0,0,0, /// header size
@@ -75,7 +75,7 @@ unsigned char* BMPGenerator::createBitmapInfoHeader (int height, int width, int 
     infoHeader[10] = (unsigned char)(height >> 16);
     infoHeader[11] = (unsigned char)(height >> 24);
     infoHeader[12] = (unsigned char)(1);
-    infoHeader[14] = (unsigned char)(bitDepth*8);
+    infoHeader[14] = (unsigned char)(bytesPerPixel*8);
 
     return infoHeader;
 }
