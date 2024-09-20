@@ -3,6 +3,7 @@
 #include <string>
 #include "BMPGenerator.h"
 #include "GraphReader.h"
+#include "Image.h"
 
 using namespace std;
 
@@ -69,7 +70,7 @@ void matrixImageBuilder(float (&matrix)[MATRIX_SIZE][MATRIX_SIZE], float maxDist
     
     int height = HEIGHT;
     int width = WIDTH;
-    unsigned char image[HEIGHT][WIDTH][BYTES_PER_PIXEL];
+    Image image(width, height, BYTES_PER_PIXEL);
     char* imageFileName = (char*) "matrix.bmp";
 
     int i, j;
@@ -82,13 +83,13 @@ void matrixImageBuilder(float (&matrix)[MATRIX_SIZE][MATRIX_SIZE], float maxDist
             imageI = flip ? height - imageI - 1 : imageI;
             int imageJ = (j + offset) % MATRIX_SIZE;
             
-            image[imageI][imageJ][2] = color; //r
-            image[imageI][imageJ][1] = color; //g
-            image[imageI][imageJ][0] = color; //b
+            image.writePixelChannel(imageI, imageJ, 2, color); //r
+            image.writePixelChannel(imageI, imageJ, 1, color); //r
+            image.writePixelChannel(imageI, imageJ, 0, color); //r
         }
     }
 
-    BMPGenerator::generateBitmapImage((unsigned char*) image, height, width, imageFileName);
+    image.printImageAsBMP(imageFileName);
 }
 
 void prettyRainbow() {
@@ -98,18 +99,18 @@ void prettyRainbow() {
 
     int height = HEIGHT;
     int width = WIDTH;
-    unsigned char image[HEIGHT][WIDTH][BYTES_PER_PIXEL];
+    Image image(WIDTH, HEIGHT, BYTES_PER_PIXEL);
     char* imageFileName = (char*) "prettyRainbow.bmp";
 
     int i, j;
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
-            image[i][j][2] = (unsigned char) ( i * 255 / height );             ///red
-            image[i][j][1] = (unsigned char) ( j * 255 / width );              ///green
-            image[i][j][0] = (unsigned char) ( (i+j) * 255 / (height+width) ); ///blue
+            image.writePixelChannel(i, j, 2, (unsigned char) ( i * 255 / height )); ///red
+            image.writePixelChannel(i, j, 1, (unsigned char) ( j * 255 / width )); ///green
+            image.writePixelChannel(i, j, 0, (unsigned char) ( (i+j) * 255 / (height+width) )); ///blue
         }
     }
 
-    BMPGenerator::generateBitmapImage((unsigned char*) image, height, width, imageFileName);
+    image.printImageAsBMP(imageFileName);
     printf("Image generated!!");
 }
