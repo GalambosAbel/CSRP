@@ -2,3 +2,4 @@
 - BMPGenerator, TODOs are included in the `.h`.
 - main, make the matrix pipeline its own class, and properly modularise it (could introduce destructors and stuff)
 - document `Image` class 
+- document `SquareMatrixF` class

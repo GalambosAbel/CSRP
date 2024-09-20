@@ -4,17 +4,14 @@
 #include "BMPGenerator.h"
 #include "GraphReader.h"
 #include "Image.h"
+#include "SquareMatrixF.h"
 
 using namespace std;
-
-//#define MATRIX_SIZE 252
-const int MATRIX_SIZE = 252;
 
 static char* tspFile = (char*)"..\\test graphs\\concordeTest.tsp";
 static char* tourFile = (char*)"..\\test graphs\\tour.cyc";
 
 void prettyRainbow();
-static void matrixImageBuilder(float (&matrix)[MATRIX_SIZE][MATRIX_SIZE], float maxDist, int offset = 0, bool flip = true);
 void matrixPipeline(char* tspFile, char* tourFile);
 
 
@@ -28,19 +25,21 @@ void matrixPipeline(char* tspFile, char* tourFile) {
     //read distances
     vector<vector<float>> coords = GraphReader::readTsp_EUC_2D(tspFile);
     
+    int matrixSize = coords.size();
+
     //build distance matrix
-    float distanceMatrix[MATRIX_SIZE][MATRIX_SIZE];
+    SquareMatrixF distanceMatrix(matrixSize);
     float maxDist = 0;
-    for (int i = 0; i < MATRIX_SIZE; i++)
+    for (int i = 0; i < matrixSize; i++)
     {
-        for (int j = i; j < MATRIX_SIZE; j++)
+        for (int j = i; j < matrixSize; j++)
         {
             float dx = coords[i][0] - coords[j][0];
             float dy = coords[i][1] - coords[j][1];
             float dist = sqrt(dx*dx + dy*dy);
 
-            distanceMatrix[i][j] = dist;
-            distanceMatrix[j][i] = dist;
+            distanceMatrix.setElement(i,j, dist);
+            distanceMatrix.setElement(j,i, dist);
 
             if (dist > maxDist) maxDist = dist;
         }
@@ -49,47 +48,13 @@ void matrixPipeline(char* tspFile, char* tourFile) {
     //read the tour order    
     vector<int> order = GraphReader::readTour(tourFile);
 
-    //build the ordered matrix
-    float orderedDistanceMatrix[MATRIX_SIZE][MATRIX_SIZE];
-    for (int i = 0; i < MATRIX_SIZE; i++)
-    {
-        for (int j = 0; j < MATRIX_SIZE; j++)
-        {
-            orderedDistanceMatrix[i][j] = distanceMatrix[order[i]][order[j]];
-        }
-    }
+    //order the matrix
+    distanceMatrix.order(order.data());
 
-    matrixImageBuilder(orderedDistanceMatrix, maxDist, 4);
-    printf("Matrix image generated!");
-}
-
-void matrixImageBuilder(float (&matrix)[MATRIX_SIZE][MATRIX_SIZE], float maxDist, int offset, bool flip) {
-    const int BYTES_PER_PIXEL = 3; /// red, green, & blue
-    const int WIDTH = MATRIX_SIZE;
-    const int HEIGHT = MATRIX_SIZE;
-    
-    int height = HEIGHT;
-    int width = WIDTH;
-    Image image(width, height, BYTES_PER_PIXEL);
+    //create the image
     char* imageFileName = (char*) "matrix.bmp";
-
-    int i, j;
-    for (i = 0; i < height; i++) {
-        for (j = 0; j < width; j++) {
-            unsigned char color = ((int)(matrix[i][j] * 255 / maxDist));
-
-            offset = (offset % MATRIX_SIZE + MATRIX_SIZE) % MATRIX_SIZE;
-            int imageI = (i + offset) % MATRIX_SIZE;
-            imageI = flip ? height - imageI - 1 : imageI;
-            int imageJ = (j + offset) % MATRIX_SIZE;
-            
-            image.writePixelChannel(imageI, imageJ, 2, color); //r
-            image.writePixelChannel(imageI, imageJ, 1, color); //r
-            image.writePixelChannel(imageI, imageJ, 0, color); //r
-        }
-    }
-
-    image.printImageAsBMP(imageFileName);
+    distanceMatrix.toImage(maxDist, 4).printImageAsBMP(imageFileName);
+    printf("Matrix image generated!");
 }
 
 void prettyRainbow() {

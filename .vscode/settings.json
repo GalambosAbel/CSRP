@@ -3,6 +3,8 @@
         "ostream": "cpp",
         "xstring": "cpp",
         "vector": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "xiosbase": "cpp",
+        "iostream": "cpp"
     }
 }
