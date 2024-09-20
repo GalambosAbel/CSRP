@@ -2,6 +2,7 @@
 #define GRAPH_READER
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -16,32 +17,21 @@ using namespace std;
 class GraphReader {
     public:
         /**
-         * Reads a .tsp file that has format `EUC_2D`, and outputs a vector with the x-coordinates and a vector with the y-coordinates.
+         * Reads a .tsp file that has format `EUC_2D`, and outputs a vector with the x- and y-coordinates of the points.
+         * The order of the elements in the vector is the same order that they appear in, the indicies are ignored.
          * @param tspFileNameWithPath This is the path and name of the .tsp file.
-         * @param xs This is the array where the x-coordinates will be output to.
-         * @param ys This is the array where the y-coordinates will be output to.
-         * @param length Is the number of cities in the tsp file that is being read.
          * 
-         * @warning It is required that length(`xs`), length(`ys`)  >= `length`, but no error is thrown!
-         * 
-         * TODO: The notes.
-         * @note This function should be reworked such that the return type is `float*[2]`, and the parameters `xs`, `ys` and `length` are not included.
-         * @note Also the function should be extended to be able to read differnet configurations of a .tsp file, and return values accordingly.
-         */
-        static void readTsp(char* tspFileNameWithPath, float* xs, float* ys, int length);
+         * @returns A vector containing the coordinates of the verticies.
+        */
+        static vector<vector<float>> readTsp_EUC_2D(char* tspFileNameWithPath);
         
         /**
-         * Reads a .cyc file, and outputs in the `order` parameter the order of verticies.
-         * @param tourFileNameWithPath This is the path and name of the file that contains a permutation of (1..`length`).
-         * @param order This is the array where the order will be output to.
-         * @param length Is the number of cities in the tour that is being read.
+         * Reads a .cyc file, and returns a vector with the permutation.
+         * @param tourFileNameWithPath This is the path and name of the file that contains a permutation of the cities.
          * 
-         * @warning It is required that length(`order`) >= `length`, but no error is thrown!
-         * 
-         * TODO: The note.
-         * @note This function should be reworked such that the return type is `int*`, and the parameters `order` and `length` are not included.
+         * @returns A vector of ints, that contains the cities from the .cyc file in the same order.
          */
-        static void readTour(char* tourFileNameWithPath, int* order, int length);
+        static vector<int> readTour(char* tourFileNameWithPath);
     
     private:
         /**

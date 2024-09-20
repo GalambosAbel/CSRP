@@ -34,63 +34,67 @@ string GraphReader::fileToString(char* fileNameWithPath) {
     return resultString;
 }
 
-void GraphReader::readTour(char* tourFileNameWithPath, int* order, int length) {
+vector<int> GraphReader::readTour(char* tourFileNameWithPath) {
     string tourString = fileToString(tourFileNameWithPath);
-    string match = "1 ";
     string delimiter = "\n";
 
+    vector<int> order = vector<int>();
 
-    for (int i = 0; i < length; i++)
+    while (true)
     {
-        string line = tourString.substr(0, tourString.find(delimiter));
+        //find end of the line
+        int loc = tourString.find(delimiter);
+        if(loc == string::npos) { //if not found, end of file, return
+            return order;
+        }
+
+        //get and remove line
+        string line = tourString.substr(0, loc);
         tourString.erase(0, tourString.find(delimiter) + delimiter.length());
     
-        int city = stoi(line);
-            
-        order[i] = city;
+        //get city, and store it
+        int city = stoi(line);  
+        order.push_back(city);
     }
+    //should never happen
+    return vector<int>();
 }
 
-void GraphReader::readTsp(char* tspFileNameWithPath, float* xs, float* ys, int length) {
+vector<vector<float>> GraphReader::readTsp_EUC_2D(char* tspFileNameWithPath) {
     string tspString = fileToString(tspFileNameWithPath);
-    string match = "1 ";
-    string delimiter = "\n";
+    string coordSectionStartString = "NODE_COORD_SECTION";
+    string dimensionString = "DIMENSION: ";
+    string endOfLine = "\n";
+    string splitter = " ";
     
-    string line;
-    int comp;
+    vector<vector<float>> coords;
+    
+    //get dimension of graph
+    int dimStart = tspString.find(dimensionString) + dimensionString.length();
+    int dimEnd = tspString.find(endOfLine, dimStart);
+    int length  = stoi(tspString.substr(dimStart, dimEnd));
 
     //get rid of headers
-    do {
-        line = tspString.substr(0, tspString.find(delimiter));
-        tspString.erase(0, tspString.find(delimiter) + delimiter.length());
-        comp = match.compare(line.substr(0,2));
-    } while (comp != 0);
-
-    string splitter = " ";
-
-    //first line we already got from previos section
-    int index = stoi(line.substr(0, line.find(splitter)));
-    line.erase(0, line.find(splitter) + splitter.length());
-    float x = stof(line.substr(0, line.find(splitter)));
-    line.erase(0, line.find(splitter) + splitter.length());
-    float y = stof(line);
-
-    xs[index - 1] = x;
-    ys[index - 1] = y;
+    tspString.erase(0, tspString.find(coordSectionStartString) + coordSectionStartString.length());
+    tspString.erase(0, tspString.find(endOfLine) + endOfLine.length());
 
     //get all remaining lines
-    while (tspString.length() > 0)
+    for (int i = 0; i < length ; i++)
     {
-        line = tspString.substr(0, tspString.find(delimiter));
-        tspString.erase(0, tspString.find(delimiter) + delimiter.length());
+        string line = tspString.substr(0, tspString.find(endOfLine));
+        tspString.erase(0, tspString.find(endOfLine) + endOfLine.length());
     
-        index = stoi(line.substr(0, line.find(splitter)));
+        int index = stoi(line.substr(0, line.find(splitter))); //currently unused
         line.erase(0, line.find(splitter) + splitter.length());
-        x = stof(line.substr(0, line.find(splitter)));
+        float x = stof(line.substr(0, line.find(splitter)));
         line.erase(0, line.find(splitter) + splitter.length());
-        y = stof(line);
-            
-        xs[index - 1] = x;
-        ys[index - 1] = y;
+        float y = stof(line);
+    
+        vector<float> coord;
+        coord.push_back(x);
+        coord.push_back(y);
+        coords.push_back(coord);
     }
+
+    return coords;
 }

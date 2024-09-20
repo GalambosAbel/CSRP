@@ -25,9 +25,7 @@ int main ()
 
 void matrixPipeline(char* tspFile, char* tourFile) {
     //read distances
-    float xs[MATRIX_SIZE];
-    float ys[MATRIX_SIZE];
-    GraphReader::readTsp(tspFile, xs, ys, MATRIX_SIZE);
+    vector<vector<float>> coords = GraphReader::readTsp_EUC_2D(tspFile);
     
     //build distance matrix
     float distanceMatrix[MATRIX_SIZE][MATRIX_SIZE];
@@ -36,8 +34,8 @@ void matrixPipeline(char* tspFile, char* tourFile) {
     {
         for (int j = i; j < MATRIX_SIZE; j++)
         {
-            float dx = xs[i] - xs[j];
-            float dy = ys[i] - ys[j];
+            float dx = coords[i][0] - coords[j][0];
+            float dy = coords[i][1] - coords[j][1];
             float dist = sqrt(dx*dx + dy*dy);
 
             distanceMatrix[i][j] = dist;
@@ -48,8 +46,7 @@ void matrixPipeline(char* tspFile, char* tourFile) {
     }
 
     //read the tour order    
-    int order[MATRIX_SIZE];
-    GraphReader::readTour(tourFile, order, MATRIX_SIZE);
+    vector<int> order = GraphReader::readTour(tourFile);
 
     //build the ordered matrix
     float orderedDistanceMatrix[MATRIX_SIZE][MATRIX_SIZE];
