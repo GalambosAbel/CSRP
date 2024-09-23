@@ -13,8 +13,6 @@
 
 #### Image
  - Document all the functions.
- - Add function `setPixel(int x, int y, uchar[3] color)` for quick coloring.
- - Maybe same for `getPixel`.
 
 ### SquareMatrixF
  - Document all the functions.

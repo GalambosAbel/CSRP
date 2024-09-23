@@ -70,9 +70,9 @@ void prettyRainbow() {
     int i, j;
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
-            image.writePixelChannel(i, j, 2, (unsigned char) ( i * 255 / height )); ///red
-            image.writePixelChannel(i, j, 1, (unsigned char) ( j * 255 / width )); ///green
-            image.writePixelChannel(i, j, 0, (unsigned char) ( (i+j) * 255 / (height+width) )); ///blue
+            image.setPixelChannel(i, j, 2, (unsigned char) ( i * 255 / height )); ///red
+            image.setPixelChannel(i, j, 1, (unsigned char) ( j * 255 / width )); ///green
+            image.setPixelChannel(i, j, 0, (unsigned char) ( (i+j) * 255 / (height+width) )); ///blue
         }
     }
 

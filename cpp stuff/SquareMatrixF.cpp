@@ -48,15 +48,14 @@ Image SquareMatrixF::toImage(float maxDist, int offset, bool flipVertical, bool 
     for (int i = 0; i < _size; i++) {
         for (int j = 0; j < _size; j++) {
             unsigned char color = ((int)(getElement(i,j) * 255 / maxDist));
+            unsigned char colors[3] = {color, color, color};
             
             int imageI = (i + offset) % _size;
             int imageJ = (j + offset) % _size;
             imageI = flipVertical ? _size - imageI - 1 : imageI;
             imageJ = flipHorizontal ? _size - imageJ - 1 : imageJ;
 
-            image.writePixelChannel(imageI, imageJ, 2, color); //r
-            image.writePixelChannel(imageI, imageJ, 1, color); //r
-            image.writePixelChannel(imageI, imageJ, 0, color); //r
+            image.setPixel(imageI, imageJ, colors);
         }
     }
     return image;
