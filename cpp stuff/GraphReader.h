@@ -41,6 +41,7 @@ class GraphReader {
          * 
          * TODO: The note.
          * @note Find source of the function implementation on the internet.
+         * @note Its here: https://cplusplus.com/reference/cstdio/fread/
          */
         static string fileToString(char* fileNameWithPath);
 };

@@ -2,14 +2,14 @@
  - This can always be improved.
 
 ### GraphReader
- - Find where I copied the `fileToString` function form.
+ - Add source of `fileToString` to the implementation not the specification.
  - Add read functions for other tsp formats.
  - Add read function for a list of vectors (output is maybe matrix)
  - Remove TODOs drom the `.h`.
 
 ### BMPGenerator
- - Find where I copied basically all the functions in this class from.
  - Remove TODOs drom the `.h`.
+ - Add source to the implementation not the specification.
 
 #### Image
  - Document all the functions.

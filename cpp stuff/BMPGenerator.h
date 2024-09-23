@@ -7,6 +7,7 @@
  *
  * TODO: The note.
  * @note Find source of the function implementations in this class on the internet.
+ * @note Its here: https://stackoverflow.com/a/47785639
  */
 class BMPGenerator{
     public:
