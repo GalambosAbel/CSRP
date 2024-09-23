@@ -1,5 +1,24 @@
-- GraphReader, TODOs are included in the `.h`.
-- BMPGenerator, TODOs are included in the `.h`.
-- main, make the matrix pipeline its own class, and properly modularise it (could introduce destructors and stuff)
-- document `Image` class 
-- document `SquareMatrixF` class
+### main
+ - This can always be improved.
+
+### GraphReader
+ - Find where I copied the `fileToString` function form.
+ - Add read functions for other tsp formats.
+ - Add read function for a list of vectors (output is maybe matrix)
+ - Remove TODOs drom the `.h`.
+
+### BMPGenerator
+ - Find where I copied basically all the functions in this class from.
+ - Remove TODOs drom the `.h`.
+
+#### Image
+ - Document all the functions.
+ - Add function `setPixel(int x, int y, uchar[3] color)` for quick coloring.
+ - Maybe same for `getPixel`.
+
+### SquareMatrixF
+ - Document all the functions.
+ - Improve the `toImage` function based on the improvements to the `Image` class, and the `Color` class.
+
+### Color
+ - Implement this class for the purpose of handling color schemes.
