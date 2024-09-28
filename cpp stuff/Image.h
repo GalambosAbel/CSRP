@@ -7,7 +7,6 @@ class Image{
         Image(Image& source);
         ~Image();
         unsigned char getPixelChannel(int x, int y, int channel);
-        unsigned char* getPixel(int x, int y);
         void setPixelChannel(int x, int y, int channel, unsigned char color);
         void setPixel(int x, int y, unsigned char color[3]);
         void printImageAsBMP(char* targetFileName);

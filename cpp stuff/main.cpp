@@ -5,6 +5,7 @@
 #include "GraphReader.h"
 #include "Image.h"
 #include "SquareMatrixF.h"
+#include "ColorScheme.h"
 
 using namespace std;
 
@@ -53,7 +54,9 @@ void matrixPipeline(char* tspFile, char* tourFile) {
 
     //create the image
     char* imageFileName = (char*) "matrix.bmp";
+    char* spectralImageFileName = (char*) "spectralMatrix.bmp";
     distanceMatrix.toImage(maxDist, 4).printImageAsBMP(imageFileName);
+    distanceMatrix.toImage(maxDist, ColorScheme::spectral(), 4).printImageAsBMP(spectralImageFileName);
     printf("Matrix image generated!");
 }
 

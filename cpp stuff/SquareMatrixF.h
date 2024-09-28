@@ -1,7 +1,8 @@
 #ifndef SQUARE_MATRIX_F
 #define SQUARE_MATRIX_F
 
-#include "image.h"
+#include "Image.h"
+#include "ColorScheme.h"
 
 class SquareMatrixF{
     public:
@@ -14,6 +15,7 @@ class SquareMatrixF{
         void order(int* order);
         //add argument for colorscale, also redesign
         Image toImage(float maxDist, int offset = 0, bool flipVertical = true, bool flipHorizontal = false);
+        Image toImage(float maxDist, ColorScheme* colorScheme, int offset = 0, bool flipVertical = true, bool flipHorizontal = false);
     private:
         void flipVertical();
         void flipHorizontal();

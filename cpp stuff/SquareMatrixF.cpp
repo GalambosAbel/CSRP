@@ -3,6 +3,7 @@
 #include <iostream>
 #include "SquareMatrixF.h"
 #include "Image.h"
+#include "ColorScheme.h"
 
 using namespace std;
 
@@ -42,20 +43,25 @@ void SquareMatrixF::order(int* order) {
 }
 
 Image SquareMatrixF::toImage(float maxDist, int offset, bool flipVertical, bool flipHorizontal) {
+    return toImage(maxDist, ColorScheme::greyscale(), offset, flipVertical, flipHorizontal);
+}
+
+Image SquareMatrixF::toImage(float maxDist, ColorScheme* colorScheme, int offset, bool flipVertical, bool flipHorizontal) {
     Image image(_size, _size, 3);
     offset = (offset % _size + _size) % _size;
 
     for (int i = 0; i < _size; i++) {
         for (int j = 0; j < _size; j++) {
-            unsigned char color = ((int)(getElement(i,j) * 255 / maxDist));
-            unsigned char colors[3] = {color, color, color};
+            unsigned char color[3];
+            
+            colorScheme->getColor(color, getElement(i,j), 0, maxDist);
             
             int imageI = (i + offset) % _size;
             int imageJ = (j + offset) % _size;
             imageI = flipVertical ? _size - imageI - 1 : imageI;
             imageJ = flipHorizontal ? _size - imageJ - 1 : imageJ;
 
-            image.setPixel(imageI, imageJ, colors);
+            image.setPixel(imageI, imageJ, color);
         }
     }
     return image;
