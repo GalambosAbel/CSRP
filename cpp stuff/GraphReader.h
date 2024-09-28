@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "SquareMatrixF.h"
 
 using namespace std;
 
@@ -25,6 +26,17 @@ class GraphReader {
         */
         static vector<vector<float>> readTsp_EUC_2D(char* tspFileNameWithPath);
         
+        /**
+         * Reads a .tsp file that has format `EXPLICIT`, and outputs a Matrix with the weights.
+         * The order of the elements in the matrix is the same order that they appear in, the indicies are ignored.
+         * @param tspFileNameWithPath This is the path and name of the .tsp file.
+         * 
+         * @note It can currently only process the edge weight format `FULL_MATRIX`, I will add the others as needed.
+         * 
+         * @returns The matrix that represents the input file.
+         */
+        static SquareMatrixF readTsp_Explicit_FullMatrix(char* tspFileNameWithPath);
+
         /**
          * Reads a .cyc file, and returns a vector with the permutation.
          * @param tourFileNameWithPath This is the path and name of the file that contains a permutation of the cities.

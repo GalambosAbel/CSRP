@@ -18,5 +18,5 @@
  - Document all the functions.
  - Improve the `toImage` function based on the improvements to the `Image` class, and the `Color` class.
 
-### Color
- - Implement this class for the purpose of handling color schemes.
+### ColorScheme
+ - Document all the functions.

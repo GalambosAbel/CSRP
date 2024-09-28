@@ -12,6 +12,8 @@ using namespace std;
 static char* tspFile = (char*)"..\\test graphs\\concordeTest.tsp";
 static char* tourFile = (char*)"..\\test graphs\\tour.cyc";
 
+static char* tsplibTest = (char*)"..\\tspTest.tsp";
+
 void prettyRainbow();
 void matrixPipeline(char* tspFile, char* tourFile);
 
@@ -20,6 +22,9 @@ int main ()
 {
     prettyRainbow();
     matrixPipeline(tspFile, tourFile);
+
+    SquareMatrixF mat = GraphReader::readTsp_Explicit_FullMatrix(tsplibTest);
+    mat.toImage(100, ColorScheme::spectral()).printImageAsBMP("tspTestMatrix.bmp");
 }
 
 void matrixPipeline(char* tspFile, char* tourFile) {

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "GraphReader.h"
+#include "SquareMatrixF.h"
 
 using namespace std;
 
@@ -97,4 +98,41 @@ vector<vector<float>> GraphReader::readTsp_EUC_2D(char* tspFileNameWithPath) {
     }
 
     return coords;
+}
+
+SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath) {
+    string tspString = fileToString(tspFileNameWithPath);
+    // string edgeWeightFormatString = "EDGE_WEIGHT_FORMAT: ";
+    string edgeSectionStartString = "EDGE_WEIGHT_SECTION";
+    string dimensionString = "DIMENSION: ";
+    string endOfLine = "\n";
+    string splitter = " ";
+    
+    
+    //get dimension of graph
+    int dimStart = tspString.find(dimensionString) + dimensionString.length();
+    int dimEnd = tspString.find(endOfLine, dimStart);
+    int length  = stoi(tspString.substr(dimStart, dimEnd));
+    
+    SquareMatrixF matrix = SquareMatrixF(length);
+
+    //get rid of headers
+    tspString.erase(0, tspString.find(edgeSectionStartString) + edgeSectionStartString.length());
+    tspString.erase(0, tspString.find(endOfLine) + endOfLine.length());
+
+    //get all remaining lines
+    for (int i = 0; i < length ; i++)
+    {
+        string line = tspString.substr(0, tspString.find(endOfLine));
+        tspString.erase(0, tspString.find(endOfLine) + endOfLine.length());
+        for (int j = 0; j < length; j++)
+        {
+            float x = stof(line.substr(0, line.find(splitter)));
+            line.erase(0, line.find(splitter) + splitter.length());
+
+            matrix.setElement(j,i, x);
+        }
+    }
+
+    return matrix;
 }
