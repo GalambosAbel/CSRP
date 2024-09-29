@@ -32,7 +32,7 @@ int SquareMatrixF::getSize() {
 }
 
 void SquareMatrixF::order(int* order) {
-     SquareMatrixF copy(*this);
+    SquareMatrixF copy(*this);
     
     for (int x = 0; x < _size; x++)
     {
