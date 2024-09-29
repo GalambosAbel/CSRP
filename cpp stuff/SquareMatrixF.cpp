@@ -10,20 +10,20 @@ using namespace std;
 
 SquareMatrixF::SquareMatrixF(int size) {
     _size = size;
-    matrixBuffer = (float*) malloc(sizeof(float) * _size * _size);
+    matrixBuffer = (double*) malloc(sizeof(double) * _size * _size);
 }
 
 SquareMatrixF::SquareMatrixF(SquareMatrixF& source) {
     _size = source._size;
-    matrixBuffer = (float*) malloc(sizeof(float) * _size * _size);
-    memcpy(matrixBuffer, source.matrixBuffer, sizeof(float) * _size * _size);
+    matrixBuffer = (double*) malloc(sizeof(double) * _size * _size);
+    memcpy(matrixBuffer, source.matrixBuffer, sizeof(double) * _size * _size);
 }
 
-void SquareMatrixF::setElement(int x, int y, float value) {
+void SquareMatrixF::setElement(int x, int y, double value) {
     matrixBuffer[x + y * _size] = value;
 }
 
-float SquareMatrixF::getElement(int x, int y) {
+double SquareMatrixF::getElement(int x, int y) {
     return matrixBuffer[x + y * _size];
 }
 
@@ -43,11 +43,11 @@ void SquareMatrixF::order(int* order) {
     }
 }
 
-Image SquareMatrixF::toImage(float maxDist, int offset, bool flipVertical, bool flipHorizontal) {
+Image SquareMatrixF::toImage(double maxDist, int offset, bool flipVertical, bool flipHorizontal) {
     return toImage(maxDist, ColorScheme::greyscale(), offset, flipVertical, flipHorizontal);
 }
 
-Image SquareMatrixF::toImage(float maxDist, ColorScheme* colorScheme, int offset, bool flipVertical, bool flipHorizontal) {
+Image SquareMatrixF::toImage(double maxDist, ColorScheme* colorScheme, int offset, bool flipVertical, bool flipHorizontal) {
     Image image(_size, _size, 3);
     offset = (offset % _size + _size) % _size;
 

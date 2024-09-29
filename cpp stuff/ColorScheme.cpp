@@ -29,7 +29,7 @@ ColorScheme::~ColorScheme() {
     free(_colors);
 }
 
-void ColorScheme::getColor(unsigned char out[3], float ratio, float min, float max) {
+void ColorScheme::getColor(unsigned char out[3], double ratio, double min, double max) {
     //scale ratio between 0 and 1
     ratio -= min; 
     ratio /= (max - min);
@@ -54,17 +54,17 @@ void ColorScheme::getColor(unsigned char out[3], float ratio, float min, float m
     }
     
     //contribution of the upper color
-    float upperContribution = ratio - (float)lowerColor;
+    double upperContribution = ratio - (double)lowerColor;
 
     //contributions of lower values
-    float lowR = ((float)1 - upperContribution) * (float)_colors[3*lowerColor];
-    float lowG = ((float)1 - upperContribution) * (float)_colors[3*lowerColor + 1];
-    float lowB = ((float)1 - upperContribution) * (float)_colors[3*lowerColor + 2];
+    double lowR = ((double)1 - upperContribution) * (double)_colors[3*lowerColor];
+    double lowG = ((double)1 - upperContribution) * (double)_colors[3*lowerColor + 1];
+    double lowB = ((double)1 - upperContribution) * (double)_colors[3*lowerColor + 2];
 
     //contributions of upper values
-    float highR = upperContribution * (float)_colors[3*lowerColor + 3];
-    float highG = upperContribution * (float)_colors[3*lowerColor + 4];
-    float highB = upperContribution * (float)_colors[3*lowerColor + 5];
+    double highR = upperContribution * (double)_colors[3*lowerColor + 3];
+    double highG = upperContribution * (double)_colors[3*lowerColor + 4];
+    double highB = upperContribution * (double)_colors[3*lowerColor + 5];
     
     //populate return array
     out[0] = (unsigned char)(int) (lowR + highR);

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
+#include <cmath>
 #include "BMPGenerator.h"
 #include "GraphReader.h"
 #include "Image.h"
@@ -13,6 +14,7 @@ void runAllTests() {
     matrixPipelineTest("..\\testFiles\\testInputs\\test graphs\\concordeTest.tsp", "..\\testFiles\\testInputs\\test graphs\\tour.cyc");
     readWriteTspMatrixTest();
     prettyRainbowTest();
+    adjMatrixToImageTest("..\\testFiles\\testInputs\\_layer_0.in", 1305);
     cout << "All tests completed!" << endl;
 }
 
@@ -27,20 +29,20 @@ void readWriteTspMatrixTest() {
 void matrixPipelineTest(char* tspFile, char* tourFile) {
     cout << "MatrixPiplineTest started! ";
     //read distances
-    vector<vector<float>> coords = GraphReader::readTsp_EUC_2D(tspFile);
+    vector<vector<double>> coords = GraphReader::readTsp_EUC_2D(tspFile);
     
     int matrixSize = coords.size();
 
     //build distance matrix
     SquareMatrixF distanceMatrix(matrixSize);
-    float maxDist = 0;
+    double maxDist = 0;
     for (int i = 0; i < matrixSize; i++)
     {
         for (int j = i; j < matrixSize; j++)
         {
-            float dx = coords[i][0] - coords[j][0];
-            float dy = coords[i][1] - coords[j][1];
-            float dist = sqrt(dx*dx + dy*dy);
+            double dx = coords[i][0] - coords[j][0];
+            double dy = coords[i][1] - coords[j][1];
+            double dist = sqrt(dx*dx + dy*dy);
 
             distanceMatrix.setElement(i,j, dist);
             distanceMatrix.setElement(j,i, dist);
@@ -61,6 +63,35 @@ void matrixPipelineTest(char* tspFile, char* tourFile) {
     distanceMatrix.toImage(maxDist, 4).printImageAsBMP(imageFileName);
     distanceMatrix.toImage(maxDist, ColorScheme::spectral(), 4).printImageAsBMP(spectralImageFileName);
     cout << "MatrixPiplineTest finished!" << endl;
+}
+
+void adjMatrixToImageTest(char* adjMatrixFile, int matrixSize) {
+    cout << "adjMatrixToImageTest started! ";
+    FILE* file = fopen(adjMatrixFile, "r");
+
+    //build distance matrix
+    SquareMatrixF distanceMatrix(matrixSize);
+    double maxDist = 0;
+    for (int i = 0; i < matrixSize; i++)
+    {
+        for (int j = i; j < matrixSize; j++)
+        {
+            double dist;
+            fscanf(file, "%lf", &dist);
+
+            distanceMatrix.setElement(i,j, dist);
+            distanceMatrix.setElement(j,i, dist);
+
+            if (dist > maxDist) maxDist = dist;
+        }
+    }
+
+    //create the image
+    char* imageFileName = (char*) "..\\testFiles\\testOutputs\\adjMatrix.bmp";
+    char* spectralImageFileName = (char*) "..\\testFiles\\testOutputs\\spectralAdjMatrix.bmp";
+    distanceMatrix.toImage(maxDist, 4).printImageAsBMP(imageFileName);
+    distanceMatrix.toImage(maxDist, ColorScheme::spectral(), 4).printImageAsBMP(spectralImageFileName);
+    cout << "adjMatrixToImageTest finished!" << endl;
 }
 
 void prettyRainbowTest() {

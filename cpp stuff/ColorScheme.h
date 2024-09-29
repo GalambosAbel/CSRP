@@ -6,7 +6,7 @@ class ColorScheme {
         ColorScheme(unsigned char colors[][3], int len);
         ColorScheme(ColorScheme& source);
         ~ColorScheme();
-        void getColor(unsigned char out[3], float ratio, float min = 0, float max = 1);
+        void getColor(unsigned char out[3], double ratio, double min = 0, double max = 1);
         static ColorScheme* greyscale();
         static ColorScheme* spectral();
     private:

@@ -24,7 +24,7 @@ class GraphReader {
          * 
          * @returns A vector containing the coordinates of the verticies.
         */
-        static vector<vector<float>> readTsp_EUC_2D(char* tspFileNameWithPath);
+        static vector<vector<double>> readTsp_EUC_2D(char* tspFileNameWithPath);
         
         /**
          * Reads a .tsp file that has format `EXPLICIT`, and outputs a Matrix with the weights.

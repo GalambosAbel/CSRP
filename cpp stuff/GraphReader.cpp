@@ -61,14 +61,14 @@ vector<int> GraphReader::readTour(char* tourFileNameWithPath) {
     return vector<int>();
 }
 
-vector<vector<float>> GraphReader::readTsp_EUC_2D(char* tspFileNameWithPath) {
+vector<vector<double>> GraphReader::readTsp_EUC_2D(char* tspFileNameWithPath) {
     string tspString = fileToString(tspFileNameWithPath);
     string coordSectionStartString = "NODE_COORD_SECTION";
     string dimensionString = "DIMENSION: ";
     string endOfLine = "\n";
     string splitter = " ";
     
-    vector<vector<float>> coords;
+    vector<vector<double>> coords;
     
     //get dimension of graph
     int dimStart = tspString.find(dimensionString) + dimensionString.length();
@@ -87,11 +87,11 @@ vector<vector<float>> GraphReader::readTsp_EUC_2D(char* tspFileNameWithPath) {
     
         int index = stoi(line.substr(0, line.find(splitter))); //currently unused
         line.erase(0, line.find(splitter) + splitter.length());
-        float x = stof(line.substr(0, line.find(splitter)));
+        double x = stof(line.substr(0, line.find(splitter)));
         line.erase(0, line.find(splitter) + splitter.length());
-        float y = stof(line);
+        double y = stof(line);
     
-        vector<float> coord;
+        vector<double> coord;
         coord.push_back(x);
         coord.push_back(y);
         coords.push_back(coord);
@@ -127,7 +127,7 @@ SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath
         tspString.erase(0, tspString.find(endOfLine) + endOfLine.length());
         for (int j = 0; j < length; j++)
         {
-            float x = stof(line.substr(0, line.find(splitter)));
+            double x = stof(line.substr(0, line.find(splitter)));
             line.erase(0, line.find(splitter) + splitter.length());
 
             matrix.setElement(j,i, x);
