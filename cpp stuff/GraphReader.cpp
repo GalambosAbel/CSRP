@@ -61,6 +61,37 @@ vector<int> GraphReader::readTour(char* tourFileNameWithPath) {
     return vector<int>();
 }
 
+
+vector<int> GraphReader::readNeosTour(char* tourFileNameWithPath) {
+    string tourString = fileToString(tourFileNameWithPath);
+    string lineEndDelimiter = "\n";
+    string midLineDelimiter = " ";
+
+    vector<int> order = vector<int>();
+
+    //get length
+    int loc = tourString.find(lineEndDelimiter);
+    string line = tourString.substr(0, loc);
+    tourString.erase(0, tourString.find(lineEndDelimiter) + lineEndDelimiter.length());
+    int length = stoi(line.substr(0, line.find(midLineDelimiter)));
+
+    for (int i = 0; i < length; i++)
+    {
+        //find end of the line
+        loc = tourString.find(lineEndDelimiter);
+
+        //get and remove line
+        line = tourString.substr(0, loc);
+        tourString.erase(0, tourString.find(lineEndDelimiter) + lineEndDelimiter.length());
+    
+        //get city, and store it
+        int city = stoi(line.substr(0, line.find(midLineDelimiter)));  
+        order.push_back(city);
+    }
+
+    return order;
+}
+
 vector<vector<double>> GraphReader::readTsp_EUC_2D(char* tspFileNameWithPath) {
     string tspString = fileToString(tspFileNameWithPath);
     string coordSectionStartString = "NODE_COORD_SECTION";
@@ -87,9 +118,9 @@ vector<vector<double>> GraphReader::readTsp_EUC_2D(char* tspFileNameWithPath) {
     
         int index = stoi(line.substr(0, line.find(splitter))); //currently unused
         line.erase(0, line.find(splitter) + splitter.length());
-        double x = stof(line.substr(0, line.find(splitter)));
+        double x = stod(line.substr(0, line.find(splitter)));
         line.erase(0, line.find(splitter) + splitter.length());
-        double y = stof(line);
+        double y = stod(line);
     
         vector<double> coord;
         coord.push_back(x);
@@ -127,7 +158,7 @@ SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath
         tspString.erase(0, tspString.find(endOfLine) + endOfLine.length());
         for (int j = 0; j < length; j++)
         {
-            double x = stof(line.substr(0, line.find(splitter)));
+            double x = stod(line.substr(0, line.find(splitter)));
             line.erase(0, line.find(splitter) + splitter.length());
 
             matrix.setElement(j,i, x);

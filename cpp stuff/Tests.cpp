@@ -74,7 +74,7 @@ void adjMatrixToImageTest(char* adjMatrixFile, int matrixSize) {
     double maxDist = 0;
     for (int i = 0; i < matrixSize; i++)
     {
-        for (int j = i; j < matrixSize; j++)
+        for (int j = 0; j < matrixSize; j++)
         {
             double dist;
             fscanf(file, "%lf", &dist);

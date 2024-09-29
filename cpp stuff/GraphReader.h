@@ -44,6 +44,14 @@ class GraphReader {
          * @returns A vector of ints, that contains the cities from the .cyc file in the same order.
          */
         static vector<int> readTour(char* tourFileNameWithPath);
+
+        /**
+         * Reads a file that is of the same format as the output of NEOS, and returns a vector with the permutation.
+         * @param tourFileNameWithPath This is the path and name of the file that contains a permutation of the cities.
+         * 
+         * @returns A vector of ints, that contains the cities from the file in the same order.
+         */
+        static vector<int> readNeosTour(char* tourFileNameWithPath);
     
     private:
         /**
