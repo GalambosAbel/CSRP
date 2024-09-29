@@ -13,9 +13,9 @@ class SquareMatrixF{
         float getElement(int x, int y);
         int getSize();
         void order(int* order);
-        //add argument for colorscale, also redesign
         Image toImage(float maxDist, int offset = 0, bool flipVertical = true, bool flipHorizontal = false);
         Image toImage(float maxDist, ColorScheme* colorScheme, int offset = 0, bool flipVertical = true, bool flipHorizontal = false);
+        void toTspFullMatrix(char* fileNameWithPath, char* tspName = "tsplib from matrix", char* comment = "");
     private:
         void flipVertical();
         void flipHorizontal();

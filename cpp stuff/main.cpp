@@ -25,6 +25,7 @@ int main ()
 
     SquareMatrixF mat = GraphReader::readTsp_Explicit_FullMatrix(tsplibTest);
     mat.toImage(100, ColorScheme::spectral()).printImageAsBMP("tspTestMatrix.bmp");
+    mat.toTspFullMatrix("..\\writeTest.tsp");
 }
 
 void matrixPipeline(char* tspFile, char* tourFile) {

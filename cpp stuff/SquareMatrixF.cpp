@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <cstring>
 #include <iostream>
+#include <fstream>
 #include "SquareMatrixF.h"
 #include "Image.h"
 #include "ColorScheme.h"
@@ -65,6 +66,36 @@ Image SquareMatrixF::toImage(float maxDist, ColorScheme* colorScheme, int offset
         }
     }
     return image;
+}
+
+void SquareMatrixF::toTspFullMatrix(char* fileNameWithPath, char* tspName, char* comment) {
+    string nameString = "NAME: ";
+    string typeString = "TYPE: TSP";
+    string commentString = "COMMENT: ";
+    string dimensionString = "DIMENSION: ";
+    string edgeWeightTypeString = "EDGE_WEIGHT_TYPE: EXPLICIT";
+    string edgeWeightFormatString = "EDGE_WEIGHT_FORMAT: FULL_MATRIX";
+    string dataStartString = "EDGE_WEIGHT_SECTION: ";
+
+    ofstream output(fileNameWithPath);
+
+    output << nameString << tspName << endl;
+    output << typeString << endl;
+    output << commentString << comment << endl;
+    output << dimensionString << _size << endl;
+    output << edgeWeightTypeString << endl;
+    output << edgeWeightFormatString << endl;
+    output << dataStartString << endl;
+
+    for (int i = 0; i < _size; i++)
+    {
+        for (int j = 0; j < _size; j++)
+        {
+            output << getElement(j,i) << " ";
+        }
+        output << "" << endl;
+    }
+    output.close();
 }
 
 SquareMatrixF::~SquareMatrixF() {
