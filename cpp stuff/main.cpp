@@ -13,7 +13,4 @@ using namespace std;
 int main ()
 {
     runAllTests();
-    SquareMatrixF mat = GraphReader::readTsp_Explicit_FullMatrix("..\\testFiles\\tspTest.tsp");
-    mat.toImage(100, ColorScheme::spectral()).printImageAsBMP("..\\testFiles\\tspTestMatrix.bmp");
-    mat.toTspFullMatrix("..\\testFiles\\writeTest.tsp");
 }

@@ -9,11 +9,23 @@
 #include "Tests.h"
 
 void runAllTests() {
-    matrixPipelineTest("..\\testFiles\\test graphs\\concordeTest.tsp", "..\\testFiles\\test graphs\\tour.cyc");
+    cout << "Tests started!" << endl;
+    matrixPipelineTest("..\\testFiles\\testInputs\\test graphs\\concordeTest.tsp", "..\\testFiles\\testInputs\\test graphs\\tour.cyc");
+    readWriteTspMatrixTest();
     prettyRainbowTest();
+    cout << "All tests completed!" << endl;
+}
+
+void readWriteTspMatrixTest() {
+    cout << "ReadWriteTest started! ";
+    SquareMatrixF mat = GraphReader::readTsp_Explicit_FullMatrix("..\\testFiles\\testInputs\\tspTest.tsp");
+    mat.toImage(100, ColorScheme::spectral()).printImageAsBMP("..\\testFiles\\testOutputs\\tspTestMatrix.bmp");
+    mat.toTspFullMatrix("..\\testFiles\\testOutputs\\writeTest.tsp");
+    cout << "ReadWriteTest finished!" << endl;
 }
 
 void matrixPipelineTest(char* tspFile, char* tourFile) {
+    cout << "MatrixPiplineTest started! ";
     //read distances
     vector<vector<float>> coords = GraphReader::readTsp_EUC_2D(tspFile);
     
@@ -44,14 +56,15 @@ void matrixPipelineTest(char* tspFile, char* tourFile) {
     distanceMatrix.order(order.data());
 
     //create the image
-    char* imageFileName = (char*) "..\\testFiles\\matrix.bmp";
-    char* spectralImageFileName = (char*) "..\\testFiles\\spectralMatrix.bmp";
+    char* imageFileName = (char*) "..\\testFiles\\testOutputs\\matrix.bmp";
+    char* spectralImageFileName = (char*) "..\\testFiles\\testOutputs\\spectralMatrix.bmp";
     distanceMatrix.toImage(maxDist, 4).printImageAsBMP(imageFileName);
     distanceMatrix.toImage(maxDist, ColorScheme::spectral(), 4).printImageAsBMP(spectralImageFileName);
-    printf("Matrix image generated!\n");
+    cout << "MatrixPiplineTest finished!" << endl;
 }
 
 void prettyRainbowTest() {
+    cout << "PrettyRainbowTest sterted! ";
     const int BYTES_PER_PIXEL = 3; /// red, green, & blue
     const int WIDTH = 600;
     const int HEIGHT = 450;
@@ -59,7 +72,7 @@ void prettyRainbowTest() {
     int height = HEIGHT;
     int width = WIDTH;
     Image image(WIDTH, HEIGHT, BYTES_PER_PIXEL);
-    char* imageFileName = (char*) "..\\testFiles\\prettyRainbow.bmp";
+    char* imageFileName = (char*) "..\\testFiles\\testOutputs\\prettyRainbow.bmp";
 
     int i, j;
     for (i = 0; i < height; i++) {
@@ -71,5 +84,5 @@ void prettyRainbowTest() {
     }
 
     image.printImageAsBMP(imageFileName);
-    printf("Image generated!!\n");
+    cout << "PrettyRainbowTest finished!" << endl;
 }
