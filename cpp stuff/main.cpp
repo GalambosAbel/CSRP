@@ -10,10 +10,12 @@
 
 using namespace std;
 
-void tspToBmp(double maxDist = 60000) {
-    SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix("..\\work_layer_0.tsp");
-    vector<int> order = GraphReader::readNeosTour("..\\work_layer_0.tour");
+void tspToBmp(string fileNameNoExtension, double maxDist = 60000) {
+    SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix((fileNameNoExtension + ".tsp").data());
+    vector<int> order = GraphReader::readNeosTour((fileNameNoExtension + ".tour").data());
     distanceMatrix.order(order.data());
+    
+    //puts the dummy on the edge
     int offset = 0;
     for (int i = 0; i < order.size(); i++)
     {
@@ -23,13 +25,11 @@ void tspToBmp(double maxDist = 60000) {
         }
     }
     
-    distanceMatrix.toImage(maxDist, ColorScheme::spectral(), offset).printImageAsBMP("..\\work_layer_0.png");
+    distanceMatrix.toImage(maxDist, ColorScheme::spectral(), offset, false, true).printImageAsBMP((fileNameNoExtension + ".png").data());
 }
 
-double inToTsp() {
-    int matrixSize = 1305;
-
-    FILE* file = fopen("..\\testFiles\\testInputs\\_layer_0.in", "r");
+double inToTsp(string fileNameNoExtension, int matrixSize) {
+    FILE* file = fopen((fileNameNoExtension + ".in").data(), "r");
 
     //build distance matrix
     SquareMatrixF distanceMatrix(matrixSize + 1);
@@ -52,13 +52,15 @@ double inToTsp() {
         distanceMatrix.setElement(matrixSize, i, 0);
         distanceMatrix.setElement(i, matrixSize, 0);
     }
-    distanceMatrix.toTspFullMatrix("..\\work_layer_0.tsp");
+    distanceMatrix.toTspFullMatrix((fileNameNoExtension + ".tsp").data());
     return maxDist;
 } 
 
 int main ()
 {
-    // cout << inToTsp();
-    tspToBmp(); //maxDist is 43699
+    // cout << inToTsp("..\\work_layer_0", 1305);
+    tspToBmp("..\\work_layer_0", 120000); //maxDist is 117767
+
+    // runAllTests();
 }
 

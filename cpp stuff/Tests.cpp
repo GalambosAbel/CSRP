@@ -15,6 +15,7 @@ void runAllTests() {
     readWriteTspMatrixTest();
     prettyRainbowTest();
     adjMatrixToImageTest("..\\testFiles\\testInputs\\_layer_0.in", 1305);
+    colorSchemeMatrixTest();
     cout << "All tests completed!" << endl;
 }
 
@@ -116,4 +117,19 @@ void prettyRainbowTest() {
 
     image.printImageAsBMP(imageFileName);
     cout << "PrettyRainbowTest finished!" << endl;
+}
+
+void colorSchemeMatrixTest(){
+    cout << "ColorSchemeTest started! ";
+    SquareMatrixF colorMatrix(1000);
+
+    for (int i = 0; i < 1000; i++)
+    {
+        for (int j = 0; j < 1000; j++)
+        {
+            colorMatrix.setElement(i, j, i - 150);
+        }
+    }
+    colorMatrix.toImage(1000-300, ColorScheme::spectral()).printImageAsBMP("..\\testFiles\\testOutputs\\spectralGradient.bmp");
+    cout << "ColorSchemeTest finished!" << endl;
 }

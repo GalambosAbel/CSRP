@@ -25,11 +25,11 @@ Image::~Image(){
 }
 
 unsigned char Image::getPixelChannel(int x, int y, int channel) {
-    return imageBuffer[channel + y * _depth + x * _width * _depth];
+    return imageBuffer[(2 - channel) + y * _depth + x * _width * _depth];
 }
 
 void Image::setPixelChannel(int x, int y, int channel, unsigned char color) {
-    imageBuffer[channel + y * _depth + x * _width * _depth] = color;
+    imageBuffer[(2 - channel) + y * _depth + x * _width * _depth] = color;
 }
 
 void Image::setPixel(int x, int y, unsigned char color[3]) {
