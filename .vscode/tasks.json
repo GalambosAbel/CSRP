@@ -8,7 +8,7 @@
                 "/Zi",
                 "/EHsc",
                 "/nologo",
-                "/Fe\\tmp\\${fileBasenameNoExtension}.exe",
+                "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "${fileDirname}\\*.cpp"
             ],
             "options": {

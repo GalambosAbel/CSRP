@@ -36,3 +36,5 @@
 #Pickle data (unzipped is too large)
 *.pkl
 *.in
+*.ilk
+*.pdb
