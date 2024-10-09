@@ -52,6 +52,14 @@ class GraphReader {
          * @returns A vector of ints, that contains the cities from the file in the same order.
          */
         static vector<int> readNeosTour(char* tourFileNameWithPath);
+
+        /**
+         * Reads a distance matrix from a file, and returns it as a SquareMatrixF.
+         * @param fileNameWithPath This is the path and name of the file that contains the distance matrix.
+         * 
+         * @returns A SquareMatrixF that contains the distance matrix.
+         */
+        static SquareMatrixF load_distance_matrix(const string fileNameWithPath, int matrixSize);
     
     private:
         /**

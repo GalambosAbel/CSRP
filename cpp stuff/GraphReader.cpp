@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include "GraphReader.h"
 #include "SquareMatrixF.h"
@@ -166,4 +167,24 @@ SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath
     }
 
     return matrix;
+}
+
+SquareMatrixF GraphReader::load_distance_matrix(const string fileNameWithPath, int matrixSize) {
+    std::ifstream file(fileNameWithPath);
+
+    //build distance matrix
+    SquareMatrixF distanceMatrix(matrixSize);
+    for (int i = 0; i < matrixSize; i++)
+    {
+        for (int j = 0; j < matrixSize; j++)
+        {
+            double dist;
+            file >> dist;
+
+            distanceMatrix.setElement(i,j, dist);
+            distanceMatrix.setElement(j,i, dist);
+        }
+    }
+
+    return distanceMatrix;
 }

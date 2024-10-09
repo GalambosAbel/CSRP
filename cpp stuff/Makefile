@@ -2,7 +2,7 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -g
+CXXFLAGS = -Wall -g -O2
 
 # Source files
 SRCS = $(wildcard *.cpp)
@@ -14,7 +14,7 @@ HDRS = $(wildcard *.h)
 OBJS = $(SRCS:.cpp=.o)
 
 # Executable name
-EXEC = program.exe
+EXEC = main.exe
 
 # Default target
 all: $(EXEC)

@@ -3,6 +3,8 @@
 
 #include "Image.h"
 #include "ColorScheme.h"
+#include <vector>
+#include <string>
 
 class SquareMatrixF{
     public:
@@ -16,12 +18,18 @@ class SquareMatrixF{
         Image toImage(double maxDist, int offset = 0, bool flipVertical = true, bool flipHorizontal = false);
         Image toImage(double maxDist, ColorScheme* colorScheme, int offset = 0, bool flipVertical = true, bool flipHorizontal = false);
         void toTspFullMatrix(char* fileNameWithPath, char* tspName = "tsplib from matrix", char* comment = "");
+        void swap(int i, int j);
+        double moransI();
+        double simAnnealingOrderMoransI(int iters, double startTemp);
     private:
         void flipVertical();
         void flipHorizontal();
         void offset(int offset);
         int _size;
         double* matrixBuffer;
+        double _morans_mean = -1;
+        double _morans_variance = -1;
+        double _moransI = -1;
 };
 
 #endif

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include <cmath>
+#include <iomanip>
 #include "BMPGenerator.h"
 #include "GraphReader.h"
 #include "Image.h"
@@ -16,6 +17,7 @@ void runAllTests() {
     prettyRainbowTest();
     adjMatrixToImageTest("..\\testFiles\\testInputs\\_layer_0.in", 1305);
     colorSchemeMatrixTest();
+    moransITest();
     cout << "All tests completed!" << endl;
 }
 
@@ -57,6 +59,8 @@ void matrixPipelineTest(char* tspFile, char* tourFile) {
 
     //order the matrix
     distanceMatrix.order(order.data());
+
+    cout << distanceMatrix.moransI() << endl;
 
     //create the image
     char* imageFileName = (char*) "..\\testFiles\\testOutputs\\matrix.bmp";
@@ -132,4 +136,57 @@ void colorSchemeMatrixTest(){
     }
     colorMatrix.toImage(1000-300, ColorScheme::spectral()).printImageAsBMP("..\\testFiles\\testOutputs\\spectralGradient.bmp");
     cout << "ColorSchemeTest finished!" << endl;
+}
+
+void moransITest() {
+    cout << "MoransITest started!" << endl;
+    // 0 1 0 0 1 1
+    // 1 0 1 0 1 0
+    // 0 1 0 1 0 1
+    // 0 0 1 0 1 0
+    // 1 1 0 1 0 1
+    // 1 0 1 0 1 0
+
+    SquareMatrixF* mat = new SquareMatrixF(6);
+    mat->setElement(0, 0, 0);
+    mat->setElement(0, 1, 1);
+    mat->setElement(0, 2, 0);
+    mat->setElement(0, 3, 0);
+    mat->setElement(0, 4, 1);
+    mat->setElement(0, 5, 1);
+    mat->setElement(1, 0, 1);
+    mat->setElement(1, 1, 0);
+    mat->setElement(1, 2, 1);
+    mat->setElement(1, 3, 0);
+    mat->setElement(1, 4, 1);
+    mat->setElement(1, 5, 0);
+    mat->setElement(2, 0, 0);
+    mat->setElement(2, 1, 1);
+    mat->setElement(2, 2, 0);
+    mat->setElement(2, 3, 1);
+    mat->setElement(2, 4, 0);
+    mat->setElement(2, 5, 1);
+    mat->setElement(3, 0, 0);
+    mat->setElement(3, 1, 0);
+    mat->setElement(3, 2, 1);
+    mat->setElement(3, 3, 0);
+    mat->setElement(3, 4, 1);
+    mat->setElement(3, 5, 0);
+    mat->setElement(4, 0, 1);
+    mat->setElement(4, 1, 1);
+    mat->setElement(4, 2, 0);
+    mat->setElement(4, 3, 1);
+    mat->setElement(4, 4, 0);
+    mat->setElement(4, 5, 1);
+    mat->setElement(5, 0, 1);
+    mat->setElement(5, 1, 0);
+    mat->setElement(5, 2, 1);
+    mat->setElement(5, 3, 0);
+    mat->setElement(5, 4, 1);
+    mat->setElement(5, 5, 0);
+
+    cout << "Expected Morans I: -0.73 ";
+    cout << "Computed Morans I: " << fixed << setprecision(2) << mat->moransI() << endl;
+    
+    cout << "MoransITest finished!" << endl;
 }

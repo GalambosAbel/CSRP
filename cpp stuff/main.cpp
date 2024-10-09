@@ -1,6 +1,8 @@
 #include <iostream>
+#include <fstream>
 #include <stdio.h>
 #include <string>
+#include <string.h>
 #include "BMPGenerator.h"
 #include "GraphReader.h"
 #include "Image.h"
@@ -54,8 +56,7 @@ double inToTsp(char* inFileName, char* tspFileName, int matrixSize) {
     }
     distanceMatrix.toTspFullMatrix(tspFileName);
     return maxDist;
-} 
-
+}
 
 int main (int argc, char* argv[])
 {
@@ -86,7 +87,52 @@ int main (int argc, char* argv[])
             tspToBmp(argv[2], argv[3], argv[4]);
         }
         return 0;
+    } else if (argc >= 6 && (stricmp(argv[1], "simAnneal") == 0 || stricmp(argv[1], "sa") == 0)) {
+        SquareMatrixF distanceMatrix = GraphReader::load_distance_matrix(argv[2], stoi(argv[3]));
+        double best = distanceMatrix.simAnnealingOrderMoransI(stoi(argv[4]), stof(argv[5]));
+
+        std::ofstream output(to_string(best) + ".out");
+
+        for (int i = 0; i < stoi(argv[3]); i++)
+        {
+            for (int j = 0; j < stoi(argv[3]); j++)
+            {
+                output << distanceMatrix.getElement(i, j) << " ";
+            }
+            output << std::endl;
+        }
+
+        distanceMatrix.toImage(0.6, ColorScheme::spectral(), 4).printImageAsBMP(const_cast<char*>((to_string(best) + ".bmp").c_str()));
+
+        output.close();
+
+        return 0;
+    } else if (argc >= 6 && (stricmp(argv[1], "simAnnealTsp") == 0 || stricmp(argv[1], "sat") == 0)) {
+        SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(argv[2]);
+        vector<int> order = GraphReader::readNeosTour(argv[3]);
+
+        distanceMatrix.order(order.data());
+
+        double best = distanceMatrix.simAnnealingOrderMoransI(stoi(argv[4]), stof(argv[5]));
+
+        std::ofstream output(to_string(best) + ".out");
+
+        for (int i = 0; i < distanceMatrix.getSize(); i++)
+        {
+            for (int j = 0; j < distanceMatrix.getSize(); j++)
+            {
+                output << distanceMatrix.getElement(i, j) << " ";
+            }
+            output << std::endl;
+        }
+
+        distanceMatrix.toImage(0.6, ColorScheme::spectral(), 4).printImageAsBMP(const_cast<char*>((to_string(best) + ".bmp").c_str()));
+
+        output.close();
+
+        return 0;
     }
+
     return -1;
 }
 
