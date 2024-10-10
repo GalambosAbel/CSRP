@@ -20,7 +20,9 @@ class SquareMatrixF{
         void toTspFullMatrix(char* fileNameWithPath, char* tspName = "tsplib from matrix", char* comment = "");
         void swap(int i, int j);
         double moransI();
+        double getStoredMoransI();
         double simAnnealingOrderMoransI(int iters, double startTemp);
+        SquareMatrixF moransIDistanceMatrix();
     private:
         void flipVertical();
         void flipHorizontal();

@@ -12,127 +12,120 @@
 
 using namespace std;
 
-void tspToBmp(char* tspFileName, char* tourFileName, char* imgFileName, double maxDist = 60000) {
-    SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(tspFileName);
-    vector<int> order = GraphReader::readNeosTour(tourFileName);
-    distanceMatrix.order(order.data());
-    
-    //puts the dummy on the edge
-    int offset = 0;
-    for (int i = 0; i < order.size(); i++)
-    {
-        if (order[i] == order.size() - 1) {
-            // cout << i;
-            offset = order.size() - i;
-        }
-    }
-    
-    distanceMatrix.toImage(maxDist, ColorScheme::spectral(), offset, false, true).printImageAsBMP(imgFileName);
+int inToTsp(char* inFileName, char* tspFileName, int matrixSize) {
+    GraphReader::loadDistanceMatrix(inFileName, matrixSize).toTspFullMatrix(tspFileName);
+    return 0;
 }
 
-double inToTsp(char* inFileName, char* tspFileName, int matrixSize) {
-    FILE* file = fopen(inFileName, "r");
+int tspToImg(char* tspFileName, char* imgFileName, double maxDist) {
+    SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(tspFileName);
+    
+    distanceMatrix.toImage(maxDist, ColorScheme::spectral(), 0, false, true).printImageAsBMP(imgFileName);
 
-    //build distance matrix
-    SquareMatrixF distanceMatrix(matrixSize + 1);
-    double maxDist = 0;
+    return 0;
+}
+
+int orderTsp(char* sourceTspFileName, char* tourFileName, char* targetTspFileName) {
+    SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(sourceTspFileName);
+    vector<int> order = GraphReader::readNeosTour(tourFileName);
+    if (order.size() < distanceMatrix.getSize()) {return -2;}
+    if (order.size() > distanceMatrix.getSize() + 1) {return -3;}
+    if (order.size() == distanceMatrix.getSize() + 1) {
+        for (int i = 0; i < distanceMatrix.getSize(); i++) //an extra node was added
+        {
+            order[i] = order[i+1] - 1;
+        }        
+    }
+    distanceMatrix.order(order.data());
+    
+    distanceMatrix.toTspFullMatrix(targetTspFileName);
+
+    return 0;
+}
+
+//TODO there is waaaay too muh code duplication here! (only line 1 differs in sa and sat)
+int simAnneal(char* inFileName, char* outPath, int matrixSize, int iterations, double startTemp) {
+    SquareMatrixF distanceMatrix = GraphReader::loadDistanceMatrix(inFileName, matrixSize);
+    double best = distanceMatrix.simAnnealingOrderMoransI(iterations, startTemp);
+
+    string noExtensionName(outPath);
+    noExtensionName += to_string(best);
+    std::ofstream output(noExtensionName + ".out");
+
     for (int i = 0; i < matrixSize; i++)
     {
         for (int j = 0; j < matrixSize; j++)
         {
-            double dist;
-            fscanf(file, "%lf", &dist);
-            
-            dist *= 100000; //neos has rounding issues maybe?
-
-            distanceMatrix.setElement(i,j, dist);
-            distanceMatrix.setElement(j,i, dist);
-
-            if (dist > maxDist) maxDist = dist;
+            output << distanceMatrix.getElement(i, j) << " ";
         }
-        //add dummy
-        distanceMatrix.setElement(matrixSize, i, 0);
-        distanceMatrix.setElement(i, matrixSize, 0);
+        output << std::endl;
     }
-    distanceMatrix.toTspFullMatrix(tspFileName);
-    return maxDist;
+        
+    distanceMatrix.toImage(0.6, ColorScheme::spectral(), 4).printImageAsBMP(const_cast<char*>((noExtensionName + ".bmp").c_str()));
+
+    output.close();
+    return 0;
+}
+
+int simAnnealTsp(char* tspFileName, char* outPath, int iterations, double startTemp) {
+    SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(tspFileName);
+    double best = distanceMatrix.simAnnealingOrderMoransI(iterations, startTemp);
+
+    string noExtensionName(outPath);
+    noExtensionName += to_string(best);
+    std::ofstream output(noExtensionName + ".out");
+
+    for (int i = 0; i < distanceMatrix.getSize(); i++)
+    {
+        for (int j = 0; j < distanceMatrix.getSize(); j++)
+        {
+            output << distanceMatrix.getElement(i, j) << " ";
+        }
+        output << std::endl;
+    }
+
+    distanceMatrix.toImage(0.6, ColorScheme::spectral(), 4).printImageAsBMP(const_cast<char*>((noExtensionName + ".bmp").c_str()));
+
+    output.close();
+
+    return 0;
+}
+
+int printMoransI(char* tspFileName) {
+    SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(tspFileName);
+    cout << "The Moran's I in this oredring is: " << distanceMatrix.moransI() << "." << endl;
+    return 0;
+}
+
+int moransIDistances(char* sourceTspFileName, char* targetTspFileName) {
+    SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(sourceTspFileName);
+
+    distanceMatrix.moransIDistanceMatrix().toTspFullMatrix(targetTspFileName);
+    
+    return 0;
 }
 
 int main (int argc, char* argv[])
 {
     if (argc == 1) {
-        //Sinec test file paths are hardcoded, this needs to be invoked from the correct folder (same as source code)
+        //Since test file paths are hardcoded, this needs to be invoked from the correct folder (same as source code)
         runAllTests();
         return 0;
-    }
-    else if (argc >= 5 && (stricmp(argv[1], "inToTsp") == 0 || stricmp(argv[1], "itt") == 0)) {
-        int matrixSize = stoi(argv[4]);
-        int maxDist = inToTsp(argv[2], argv[3], matrixSize);
-        if(argc == 6) {
-            if(stricmp(argv[5], "print") == 0) {
-                cout << maxDist;
-            }
-            if(stricmp(argv[5], "return") == 0) {
-                return maxDist;
-            }
-        }
-        return 0;
-    }
-    else if (argc >= 5 && (stricmp(argv[1], "tspToImg") == 0 || stricmp(argv[1], "tti") == 0)) {
-        if(argc == 6) {
-            int maxDist = stoi(argv[5]);
-            tspToBmp(argv[2], argv[3], argv[4], maxDist);
-        }
-        else {
-            tspToBmp(argv[2], argv[3], argv[4]);
-        }
-        return 0;
-    } else if (argc >= 6 && (stricmp(argv[1], "simAnneal") == 0 || stricmp(argv[1], "sa") == 0)) {
-        SquareMatrixF distanceMatrix = GraphReader::load_distance_matrix(argv[2], stoi(argv[3]));
-        double best = distanceMatrix.simAnnealingOrderMoransI(stoi(argv[4]), stof(argv[5]));
-
-        std::ofstream output(to_string(best) + ".out");
-
-        for (int i = 0; i < stoi(argv[3]); i++)
-        {
-            for (int j = 0; j < stoi(argv[3]); j++)
-            {
-                output << distanceMatrix.getElement(i, j) << " ";
-            }
-            output << std::endl;
-        }
-
-        distanceMatrix.toImage(0.6, ColorScheme::spectral(), 4).printImageAsBMP(const_cast<char*>((to_string(best) + ".bmp").c_str()));
-
-        output.close();
-
-        return 0;
-    } else if (argc >= 6 && (stricmp(argv[1], "simAnnealTsp") == 0 || stricmp(argv[1], "sat") == 0)) {
-        SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(argv[2]);
-        vector<int> order = GraphReader::readNeosTour(argv[3]);
-
-        distanceMatrix.order(order.data());
-
-        double best = distanceMatrix.simAnnealingOrderMoransI(stoi(argv[4]), stof(argv[5]));
-
-        std::ofstream output(to_string(best) + ".out");
-
-        for (int i = 0; i < distanceMatrix.getSize(); i++)
-        {
-            for (int j = 0; j < distanceMatrix.getSize(); j++)
-            {
-                output << distanceMatrix.getElement(i, j) << " ";
-            }
-            output << std::endl;
-        }
-
-        distanceMatrix.toImage(0.6, ColorScheme::spectral(), 4).printImageAsBMP(const_cast<char*>((to_string(best) + ".bmp").c_str()));
-
-        output.close();
-
-        return 0;
-    }
-
+    } else if (argc == 5 && (stricmp(argv[1], "inToTsp") == 0 || stricmp(argv[1], "itt") == 0)) {
+        return inToTsp(argv[2], argv[3], stoi(argv[4]));
+    } else if (argc == 5 && (stricmp(argv[1], "tspToImg") == 0 || stricmp(argv[1], "tti") == 0)) {
+        return tspToImg(argv[2], argv[3], stod(argv[4]));
+    } else if (argc == 5 && (stricmp(argv[1], "orderTsp") == 0 || stricmp(argv[1], "ot") == 0)) {
+        return orderTsp(argv[2], argv[3], argv[4]);
+    }else if (argc == 7 && (stricmp(argv[1], "simAnneal") == 0 || stricmp(argv[1], "sa") == 0)) {
+        return simAnneal(argv[2], argv[3], stoi(argv[4]), stoi(argv[5]), stod(argv[6]));
+    } else if (argc == 6 && (stricmp(argv[1], "simAnnealTsp") == 0 || stricmp(argv[1], "sat") == 0)) {
+        return simAnnealTsp(argv[2], argv[3], stoi(argv[4]), stod(argv[5]));
+    } else if (argc == 3 && (stricmp(argv[1], "printMoransI") == 0 || stricmp(argv[1], "pmi") == 0)) {
+        return printMoransI(argv[2]);
+    }  else if (argc == 4 && (stricmp(argv[1], "moransIDistances") == 0 || stricmp(argv[1], "mid") == 0)) {
+        return moransIDistances(argv[2], argv[3]);
+    } 
     return -1;
 }
 

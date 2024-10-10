@@ -169,7 +169,7 @@ SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath
     return matrix;
 }
 
-SquareMatrixF GraphReader::load_distance_matrix(const string fileNameWithPath, int matrixSize) {
+SquareMatrixF GraphReader::loadDistanceMatrix(const string fileNameWithPath, int matrixSize) {
     std::ifstream file(fileNameWithPath);
 
     //build distance matrix
