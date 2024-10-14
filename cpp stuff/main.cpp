@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string>
 #include <string.h>
+#include <cmath>
 #include "BMPGenerator.h"
 #include "GraphReader.h"
 #include "Image.h"
@@ -105,6 +106,21 @@ int moransIDistances(char* sourceTspFileName, char* targetTspFileName) {
     return 0;
 }
 
+int discretizeIn(char* tspFileName, char* discreteTspFileName, int matrixSize, int numBuckets) {
+    SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(tspFileName);
+
+    for (int i = 0; i < matrixSize; i++)
+    {
+        for (int j = 0; j < matrixSize; j++)
+        {
+            distanceMatrix.setElement(i, j, round((distanceMatrix.getElement(i, j)/distanceMatrix.getMaxValue()) * numBuckets));
+        }
+    }
+
+    distanceMatrix.toTspFullMatrix(discreteTspFileName);
+    return 0;
+}
+
 int main (int argc, char* argv[])
 {
     if (argc == 1) {
@@ -123,9 +139,11 @@ int main (int argc, char* argv[])
         return simAnnealTsp(argv[2], argv[3], stoi(argv[4]), stod(argv[5]));
     } else if (argc == 3 && (stricmp(argv[1], "printMoransI") == 0 || stricmp(argv[1], "pmi") == 0)) {
         return printMoransI(argv[2]);
-    }  else if (argc == 4 && (stricmp(argv[1], "moransIDistances") == 0 || stricmp(argv[1], "mid") == 0)) {
+    } else if (argc == 4 && (stricmp(argv[1], "moransIDistances") == 0 || stricmp(argv[1], "mid") == 0)) {
         return moransIDistances(argv[2], argv[3]);
-    } 
+    } else if (argc == 6 && (stricmp(argv[1], "discretize") == 0 || stricmp(argv[1], "dis") == 0)) {
+        return discretizeIn(argv[2], argv[3], stoi(argv[4]), stoi(argv[5]));
+    }
     return -1;
 }
 

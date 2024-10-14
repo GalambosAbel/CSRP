@@ -152,6 +152,8 @@ SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath
     tspString.erase(0, tspString.find(edgeSectionStartString) + edgeSectionStartString.length());
     tspString.erase(0, tspString.find(endOfLine) + endOfLine.length());
 
+    double max_val = 0;
+
     //get all remaining lines
     for (int i = 0; i < length ; i++)
     {
@@ -162,10 +164,13 @@ SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath
             double x = stod(line.substr(0, line.find(splitter)));
             line.erase(0, line.find(splitter) + splitter.length());
 
+            max_val = max(x, max_val);
             matrix.setElement(j,i, x);
         }
     }
 
+    matrix.setMaxValue(max_val);
+    
     return matrix;
 }
 
@@ -174,6 +179,9 @@ SquareMatrixF GraphReader::loadDistanceMatrix(const string fileNameWithPath, int
 
     //build distance matrix
     SquareMatrixF distanceMatrix(matrixSize);
+
+    double max_val = 0;
+
     for (int i = 0; i < matrixSize; i++)
     {
         for (int j = 0; j < matrixSize; j++)
@@ -183,8 +191,11 @@ SquareMatrixF GraphReader::loadDistanceMatrix(const string fileNameWithPath, int
 
             distanceMatrix.setElement(i,j, dist);
             distanceMatrix.setElement(j,i, dist);
+            max_val = max<double>(max_val, dist);
         }
     }
 
+    distanceMatrix.setMaxValue(max_val);
+    
     return distanceMatrix;
 }

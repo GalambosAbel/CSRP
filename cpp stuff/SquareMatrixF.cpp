@@ -11,11 +11,13 @@
 
 SquareMatrixF::SquareMatrixF(int size) {
     _size = size;
+    maxValue = 0;
     matrixBuffer = (double*) malloc(sizeof(double) * _size * _size);
 }
 
 SquareMatrixF::SquareMatrixF(SquareMatrixF& source) {
     _size = source._size;
+    maxValue = source.maxValue;
     matrixBuffer = (double*) malloc(sizeof(double) * _size * _size);
     memcpy(matrixBuffer, source.matrixBuffer, sizeof(double) * _size * _size);
 }
