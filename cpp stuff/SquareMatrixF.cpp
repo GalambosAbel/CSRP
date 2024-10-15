@@ -23,6 +23,7 @@ SquareMatrixF::SquareMatrixF(SquareMatrixF& source) {
 }
 
 void SquareMatrixF::setElement(int x, int y, double value) {
+    if (value > maxValue) setMaxValue(value);
     matrixBuffer[x + y * _size] = value;
 }
 

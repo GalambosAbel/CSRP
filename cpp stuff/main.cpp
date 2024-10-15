@@ -113,7 +113,7 @@ int discretizeIn(char* tspFileName, char* discreteTspFileName, int matrixSize, i
     {
         for (int j = 0; j < matrixSize; j++)
         {
-            distanceMatrix.setElement(i, j, round((distanceMatrix.getElement(i, j)/distanceMatrix.getMaxValue()) * numBuckets));
+            distanceMatrix.setElement(i, j, round((distanceMatrix.getElement(i, j)/distanceMatrix.getMaxValue()) * (numBuckets - 1)));
         }
     }
 
