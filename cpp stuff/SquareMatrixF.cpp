@@ -11,7 +11,8 @@
 
 SquareMatrixF::SquareMatrixF(int size) {
     _size = size;
-    maxValue = 0;
+    maxValue = DBL_MIN;
+    minValue = DBL_MAX;
     matrixBuffer = (double*) malloc(sizeof(double) * _size * _size);
 }
 
@@ -24,6 +25,7 @@ SquareMatrixF::SquareMatrixF(SquareMatrixF& source) {
 
 void SquareMatrixF::setElement(int x, int y, double value) {
     if (value > maxValue) setMaxValue(value);
+    if (value < minValue) setMinValue(value);
     matrixBuffer[x + y * _size] = value;
 }
 

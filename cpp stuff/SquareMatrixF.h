@@ -13,8 +13,10 @@ class SquareMatrixF{
         ~SquareMatrixF();
         void setElement(int x, int y, double value);
         void setMaxValue(double value) {maxValue = value;};
+        void setMinValue(double value) {minValue = value;};
         double getElement(int x, int y);
         double getMaxValue() {return maxValue;};
+        double getMinValue() {return minValue;};
         int getSize();
         void order(int* order);
         Image toImage(double maxDist, int offset = 0, bool flipVertical = true, bool flipHorizontal = false);
@@ -31,6 +33,7 @@ class SquareMatrixF{
         void offset(int offset);
         int _size;
         double maxValue;
+        double minValue;
         double* matrixBuffer;
         double _morans_mean = -1;
         double _morans_variance = -1;
