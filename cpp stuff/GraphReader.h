@@ -59,7 +59,7 @@ class GraphReader {
          * 
          * @returns A SquareMatrixF that contains the distance matrix.
          */
-        static SquareMatrixF loadDistanceMatrix(const string fileNameWithPath, int matrixSize);
+        static SquareMatrixF loadDistanceMatrix(char* fileNameWithPath);
     
     private:
         /**

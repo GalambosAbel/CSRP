@@ -13,14 +13,50 @@
 
 using namespace std;
 
-int inToTsp(char* inFileName, char* tspFileName, int matrixSize) {
-    GraphReader::loadDistanceMatrix(inFileName, matrixSize).toTspFullMatrix(tspFileName);
+int inToTsp(char* inFileName, char* tspFileName) {
+    SquareMatrixF matrix = GraphReader::loadDistanceMatrix(inFileName);
+    matrix.toNeosInput(tspFileName);
+
+    return 0;
+}
+
+int orderIn(char* sourceInFileName, char* tourFileName, char* targetInFileName) {
+    SquareMatrixF distanceMatrix = GraphReader::loadDistanceMatrix(sourceInFileName);
+    vector<int> order = GraphReader::readNeosTour(tourFileName);
+
+    if (order.size() < distanceMatrix.getSize()) {
+        std::cerr << "Error: Tour too short " << order.size() << std::endl;
+        return -2;
+    }
+
+    if (order.size() > distanceMatrix.getSize() + 1) {
+        std::cerr << "Error: Tour too long " << order.size() << std::endl;
+        return -3;
+    }
+
+    if (order.size() == distanceMatrix.getSize() + 1) {
+        for (int i = 0; i < distanceMatrix.getSize(); i++) //an extra node was added
+        {
+            order[i] = order[i+1] - 1;
+        }        
+    }
+
+    distanceMatrix.order(order.data());
+    distanceMatrix.toInFullMatrix(targetInFileName);
+
+    return 0;
+}
+
+
+int inToImg(char* inFileName, char* imgFileName, double maxDist) {
+    SquareMatrixF distanceMatrix = GraphReader::loadDistanceMatrix(inFileName);
+
+    distanceMatrix.toDetailedImage(maxDist, ColorScheme::spectral(), 0, false, false).printImageAsBMP(imgFileName);
     return 0;
 }
 
 int tspToImg(char* tspFileName, char* imgFileName, double maxDist) {
     SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(tspFileName);
-    
     distanceMatrix.toImage(maxDist, ColorScheme::spectral(), 0, false, true).printImageAsBMP(imgFileName);
 
     return 0;
@@ -29,14 +65,24 @@ int tspToImg(char* tspFileName, char* imgFileName, double maxDist) {
 int orderTsp(char* sourceTspFileName, char* tourFileName, char* targetTspFileName) {
     SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(sourceTspFileName);
     vector<int> order = GraphReader::readNeosTour(tourFileName);
-    if (order.size() < distanceMatrix.getSize()) {return -2;}
-    if (order.size() > distanceMatrix.getSize() + 1) {return -3;}
+
+    if (order.size() < distanceMatrix.getSize()) {
+        std::cerr << "Error: Tour too short " << order.size() << std::endl;
+        return -2;
+    }
+
+    if (order.size() > distanceMatrix.getSize() + 1) {
+        std::cerr << "Error: Tour too long " << order.size() << std::endl;
+        return -3;
+    }
+
     if (order.size() == distanceMatrix.getSize() + 1) {
         for (int i = 0; i < distanceMatrix.getSize(); i++) //an extra node was added
         {
             order[i] = order[i+1] - 1;
         }        
     }
+
     distanceMatrix.order(order.data());
     
     distanceMatrix.toTspFullMatrix(targetTspFileName);
@@ -46,7 +92,7 @@ int orderTsp(char* sourceTspFileName, char* tourFileName, char* targetTspFileNam
 
 //TODO there is waaaay too muh code duplication here! (only line 1 differs in sa and sat)
 int simAnneal(char* inFileName, char* outPath, int matrixSize, int iterations, double startTemp) {
-    SquareMatrixF distanceMatrix = GraphReader::loadDistanceMatrix(inFileName, matrixSize);
+    SquareMatrixF distanceMatrix = GraphReader::loadDistanceMatrix(inFileName);
     double best = distanceMatrix.simAnnealingOrderMoransI(iterations, startTemp);
 
     string noExtensionName(outPath);
@@ -92,14 +138,14 @@ int simAnnealTsp(char* tspFileName, char* outPath, int iterations, double startT
     return 0;
 }
 
-int printMoransI(char* tspFileName) {
-    SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(tspFileName);
+int printMoransI(char* inFileName) {
+    SquareMatrixF distanceMatrix = GraphReader::loadDistanceMatrix(inFileName);
     cout << "The Moran's I in this oredring is: " << distanceMatrix.moransI() << "." << endl;
     return 0;
 }
 
-int moransIDistances(char* sourceTspFileName, char* targetTspFileName) {
-    SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(sourceTspFileName);
+int moransIDistances(char* sourceInFileName, char* targetTspFileName) {
+    SquareMatrixF distanceMatrix = GraphReader::loadDistanceMatrix(sourceInFileName);
 
     distanceMatrix.moransIDistanceMatrix().toTspFullMatrix(targetTspFileName);
     
@@ -127,8 +173,8 @@ int main (int argc, char* argv[])
         //Since test file paths are hardcoded, this needs to be invoked from the correct folder (same as source code)
         runAllTests();
         return 0;
-    } else if (argc == 5 && (stricmp(argv[1], "inToTsp") == 0 || stricmp(argv[1], "itt") == 0)) {
-        return inToTsp(argv[2], argv[3], stoi(argv[4]));
+    } else if (argc == 4 && (stricmp(argv[1], "inToTsp") == 0 || stricmp(argv[1], "itt") == 0)) {
+        return inToTsp(argv[2], argv[3]);
     } else if (argc == 5 && (stricmp(argv[1], "tspToImg") == 0 || stricmp(argv[1], "tti") == 0)) {
         return tspToImg(argv[2], argv[3], stod(argv[4]));
     } else if (argc == 5 && (stricmp(argv[1], "orderTsp") == 0 || stricmp(argv[1], "ot") == 0)) {
@@ -143,6 +189,10 @@ int main (int argc, char* argv[])
         return moransIDistances(argv[2], argv[3]);
     } else if (argc == 6 && (stricmp(argv[1], "discretize") == 0 || stricmp(argv[1], "dis") == 0)) {
         return discretizeIn(argv[2], argv[3], stoi(argv[4]), stoi(argv[5]));
+    } else if (argc == 5 && (stricmp(argv[1], "orderIn") == 0 || stricmp(argv[1], "oi") == 0)) {
+        return orderIn(argv[2], argv[3], argv[4]);
+    } else if (argc == 5 && (stricmp(argv[1], "inToImg") == 0 || stricmp(argv[1], "iti") == 0)) {
+        return inToImg(argv[2], argv[3], stod(argv[4]));
     }
     return -1;
 }

@@ -106,3 +106,73 @@ ColorScheme* ColorScheme::spectral(){
     return _spectral;
 }
 
+void ColorScheme::meaningLegend(int meaningNum, unsigned char color[]){
+    switch (meaningNum)
+    {
+    case 1:
+        color[0] = 186;
+        color[1] = 221;
+        color[2] = 116;
+        break;
+    case 2:
+        color[0] = 241;
+        color[1] = 135;
+        color[2] = 117;
+        break;
+    case 3:
+        color[0] = 109;
+        color[1] = 163;
+        color[2] = 207;
+        break;
+    case 4:
+        color[0] = 188;
+        color[1] = 128;
+        color[2] = 189;
+        break;
+    case 5:
+        color[0] = 141;
+        color[1] = 211;
+        color[2] = 199;
+        break;
+    case 6:
+        color[0] = 136;
+        color[1] = 136;
+        color[2] = 136;
+        break;
+    case 7:
+        color[0] = 255;
+        color[1] = 243;
+        color[2] = 116;
+        break;
+    case 8:
+        color[0] = 0;
+        color[1] = 136;
+        color[2] = 138;
+        break;
+    default:
+        break;
+    }
+}
+
+void ColorScheme::speechLegend(int partOfSpeechNum, unsigned char color[]){
+    switch (partOfSpeechNum)
+    {
+    case 1: // noun
+        color[0] = 143;
+        color[1] = 143;
+        color[2] = 237;
+        break;
+    case 2: // adjective
+        color[0] = 255;
+        color[1] = 217;
+        color[2] = 255;
+        break;
+    case 3: // verb
+        color[0] = 51;
+        color[1] = 194;
+        color[2] = 164;
+        break;
+    default:
+        break;
+    }
+}

@@ -4,15 +4,13 @@
 #include "GraphReader.h"
 #include "SquareMatrixF.h"
 
-using namespace std;
-
 string GraphReader::fileToString(char* fileNameWithPath) {
     FILE* pFile;
     long lSize;
     char* buffer;
     size_t result;
 
-    pFile = fopen ( fileNameWithPath, "rb" );
+    pFile = fopen (fileNameWithPath, "rb" );
     if (pFile==NULL) {fputs ("File error",stderr); exit (1);}
 
     // obtain file size:
@@ -93,6 +91,7 @@ vector<int> GraphReader::readNeosTour(char* tourFileNameWithPath) {
     return order;
 }
 
+
 vector<vector<double>> GraphReader::readTsp_EUC_2D(char* tspFileNameWithPath) {
     string tspString = fileToString(tspFileNameWithPath);
     string coordSectionStartString = "NODE_COORD_SECTION";
@@ -131,6 +130,7 @@ vector<vector<double>> GraphReader::readTsp_EUC_2D(char* tspFileNameWithPath) {
 
     return coords;
 }
+
 
 SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath) {
     string tspString = fileToString(tspFileNameWithPath);
@@ -174,28 +174,40 @@ SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath
     return matrix;
 }
 
-SquareMatrixF GraphReader::loadDistanceMatrix(const string fileNameWithPath, int matrixSize) {
+
+SquareMatrixF GraphReader::loadDistanceMatrix(char* fileNameWithPath) {
     std::ifstream file(fileNameWithPath);
 
-    //build distance matrix
-    SquareMatrixF distanceMatrix(matrixSize);
+    int length;
+    file >> length;
 
-    double max_val = 0;
+    SquareMatrixF matrix(length);
 
-    for (int i = 0; i < matrixSize; i++)
+    // Storing the word meanings
+    for (int i = 0; i < length; i++)
     {
-        for (int j = 0; j < matrixSize; j++)
-        {
-            double dist;
-            file >> dist;
+        int meaning;
+        file >> meaning;
+        matrix.setMeaning(i, meaning);
+    }
 
-            distanceMatrix.setElement(i,j, dist);
-            distanceMatrix.setElement(j,i, dist);
-            max_val = max<double>(max_val, dist);
+    for (int i = 0; i < length; i++)
+    {
+        int partOfSpeech;
+        file >> partOfSpeech;
+        matrix.setPartOfSpeech(i, partOfSpeech);
+    }
+
+    // Storing the matrix itself
+    for (int i = 0; i < length; i++) {
+        for (int j = 0; j < length; j++) {
+            double dist;
+            if (!(file >> dist)) {
+                std::cerr << "Error: Incomplete data in distance matrix file.\n";
+            }
+            matrix.setElement(i, j, dist);
         }
     }
 
-    distanceMatrix.setMaxValue(max_val);
-    
-    return distanceMatrix;
+    return SquareMatrixF(matrix);
 }
