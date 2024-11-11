@@ -1,0 +1,6 @@
+[submodule "cpp/extern/cxxopts"]
+	path = cpp/extern/cxxopts
+	url = https://github.com/jarro2783/cxxopts
+[submodule "cpp/extern/xmlrpc-c"]
+	path = cpp/extern/xmlrpc-c
+	url = https://github.com/ifm/xmlrpc-c

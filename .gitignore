@@ -31,6 +31,11 @@
 *.out
 *.app
 
+.idea/
+cmake-build-debug/
+.vscode/
+images/
+
 # NOT PART OF DEFAULT
 
 #Pickle data (unzipped is too large)
@@ -38,3 +43,5 @@
 *.in
 *.ilk
 *.pdb
+
+signature_dists/
