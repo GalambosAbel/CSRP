@@ -1,0 +1,93 @@
+Determining if the include file sys/filio.h exists failed with the following output:
+Change Dir: /mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_e1d3d/fast && /usr/bin/make -f CMakeFiles/cmTC_e1d3d.dir/build.make CMakeFiles/cmTC_e1d3d.dir/build
+make[1]: Entering directory '/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e1d3d.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -fPIE   -o CMakeFiles/cmTC_e1d3d.dir/CheckIncludeFile.c.o   -c /mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:10: fatal error: sys/filio.h: No such file or directory
+    1 | #include <sys/filio.h>
+      |          ^~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [CMakeFiles/cmTC_e1d3d.dir/build.make:66: CMakeFiles/cmTC_e1d3d.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory '/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_e1d3d/fast] Error 2
+
+
+
+Determining if the function _stricmp exists failed with the following output:
+Change Dir: /mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_d7c7f/fast && /usr/bin/make -f CMakeFiles/cmTC_d7c7f.dir/build.make CMakeFiles/cmTC_d7c7f.dir/build
+make[1]: Entering directory '/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d7c7f.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=_stricmp -fPIE   -o CMakeFiles/cmTC_d7c7f.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_d7c7f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d7c7f.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=_stricmp    CMakeFiles/cmTC_d7c7f.dir/CheckFunctionExists.c.o  -o cmTC_d7c7f 
+/usr/bin/ld: CMakeFiles/cmTC_d7c7f.dir/CheckFunctionExists.c.o: in function `main':
+CheckFunctionExists.c:(.text+0x14): undefined reference to `_stricmp'
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_d7c7f.dir/build.make:87: cmTC_d7c7f] Error 1
+make[1]: Leaving directory '/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_d7c7f/fast] Error 2
+
+
+
+Determining if the function stricmp exists failed with the following output:
+Change Dir: /mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_bf53a/fast && /usr/bin/make -f CMakeFiles/cmTC_bf53a.dir/build.make CMakeFiles/cmTC_bf53a.dir/build
+make[1]: Entering directory '/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_bf53a.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=stricmp -fPIE   -o CMakeFiles/cmTC_bf53a.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_bf53a
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bf53a.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=stricmp    CMakeFiles/cmTC_bf53a.dir/CheckFunctionExists.c.o  -o cmTC_bf53a 
+/usr/bin/ld: CMakeFiles/cmTC_bf53a.dir/CheckFunctionExists.c.o: in function `main':
+CheckFunctionExists.c:(.text+0x14): undefined reference to `stricmp'
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_bf53a.dir/build.make:87: cmTC_bf53a] Error 1
+make[1]: Leaving directory '/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_bf53a/fast] Error 2
+
+
+
+Determining if the function __strtoll exists failed with the following output:
+Change Dir: /mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_bc1b7/fast && /usr/bin/make -f CMakeFiles/cmTC_bc1b7.dir/build.make CMakeFiles/cmTC_bc1b7.dir/build
+make[1]: Entering directory '/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_bc1b7.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=__strtoll -fPIE   -o CMakeFiles/cmTC_bc1b7.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_bc1b7
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bc1b7.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=__strtoll    CMakeFiles/cmTC_bc1b7.dir/CheckFunctionExists.c.o  -o cmTC_bc1b7 
+/usr/bin/ld: CMakeFiles/cmTC_bc1b7.dir/CheckFunctionExists.c.o: in function `main':
+CheckFunctionExists.c:(.text+0x14): undefined reference to `__strtoll'
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_bc1b7.dir/build.make:87: cmTC_bc1b7] Error 1
+make[1]: Leaving directory '/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_bc1b7/fast] Error 2
+
+
+
+Determining if the function __strtoull exists failed with the following output:
+Change Dir: /mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_53eaf/fast && /usr/bin/make -f CMakeFiles/cmTC_53eaf.dir/build.make CMakeFiles/cmTC_53eaf.dir/build
+make[1]: Entering directory '/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_53eaf.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=__strtoull -fPIE   -o CMakeFiles/cmTC_53eaf.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_53eaf
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_53eaf.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=__strtoull    CMakeFiles/cmTC_53eaf.dir/CheckFunctionExists.c.o  -o cmTC_53eaf 
+/usr/bin/ld: CMakeFiles/cmTC_53eaf.dir/CheckFunctionExists.c.o: in function `main':
+CheckFunctionExists.c:(.text+0x14): undefined reference to `__strtoull'
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_53eaf.dir/build.make:87: cmTC_53eaf] Error 1
+make[1]: Leaving directory '/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_53eaf/fast] Error 2
+
+
+

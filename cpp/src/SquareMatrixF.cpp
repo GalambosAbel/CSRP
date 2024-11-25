@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <random>
 #include <iomanip>
+#include <cstring>
 #include "SquareMatrixF.h"
 
 #include <cfloat>
