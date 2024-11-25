@@ -533,6 +533,21 @@ double SquareMatrixF::moransI()
     return out;
 }
 
+double SquareMatrixF::score() {
+    double entropy = 0;
+    int seqLength = 1;
+
+    for (int i = 1; i < getSize(); i++) {
+        if (getMeaning(i - 1) == getMeaning(i)) seqLength++;
+        else {
+            entropy -= log((double)(seqLength)) * (double)(seqLength);
+            seqLength = 1;
+        }
+    }
+
+    return entropy;
+}
+
 double SquareMatrixF::simAnnealingOrderMoransI(int iters, double startTemp)
 {
     std::random_device rd;
@@ -606,7 +621,7 @@ vector<int> SquareMatrixF::getTSPOrder() {
     job.setCategory("co");
     job.setSolver("concorde");
     job.setInputMethod("TSP");
-    job.setEmail("v.lazar@student.tue.nl");
+    job.setEmail("pavinik9@gmail.com");
     job.setTsp(toTspFullMatrix());
     job.setAlgType("con");
     job.setRDType("fixed");
@@ -624,5 +639,9 @@ void SquareMatrixF::orderTSPMoransI() {
     SquareMatrixF distanceMatrix = moransIDistanceMatrix();
 
     vector<int> o = distanceMatrix.getTSPOrder();
+    //vector<int> o_prime;
+    //for (int i = 1; i < o.size(); i++) {
+    //    o_prime.push_back(o[i] - 1);
+    //}
     order(o);
 }
