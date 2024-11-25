@@ -131,7 +131,7 @@ vector<vector<double>> GraphReader::readTsp_EUC_2D(char* tspFileNameWithPath) {
     return coords;
 }
 
-SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath) {
+SquareMatrix GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath) {
     string tspString = fileToString(tspFileNameWithPath);
     // string edgeWeightFormatString = "EDGE_WEIGHT_FORMAT: ";
     string edgeSectionStartString = "EDGE_WEIGHT_SECTION";
@@ -145,7 +145,7 @@ SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath
     int dimEnd = tspString.find(endOfLine, dimStart);
     int length  = stoi(tspString.substr(dimStart, dimEnd));
     
-    SquareMatrixF matrix = SquareMatrixF(length);
+    SquareMatrix matrix = SquareMatrix(length);
 
     //get rid of headers
     tspString.erase(0, tspString.find(edgeSectionStartString) + edgeSectionStartString.length());
@@ -173,13 +173,13 @@ SquareMatrixF GraphReader::readTsp_Explicit_FullMatrix(char* tspFileNameWithPath
     return matrix;
 }
 
-SquareMatrixF GraphReader::loadDistanceMatrix(string fileNameWithPath) {
+SquareMatrix GraphReader::loadDistanceMatrix(string fileNameWithPath) {
     std::ifstream file(fileNameWithPath);
 
     int matrixSize;
     file >> matrixSize;
 
-    SquareMatrixF distanceMatrix(matrixSize);
+    SquareMatrix distanceMatrix(matrixSize);
 
     // Storing the word meanings
     for (int i = 0; i < matrixSize; i++) {

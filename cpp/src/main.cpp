@@ -5,12 +5,13 @@
 #include "SquareMatrixF.h"
 #include "GraphReader.h"
 #include "Tests.h"
+#include "NEOSJob.h"
 
 #include <cxxopts.hpp>
 
 using namespace std;
 
-void order(string inputFile, string outputFile, function<void(SquareMatrixF&)> orderFunction);
+void order(string inputFile, string outputFile, function<void(SquareMatrix&)> orderFunction);
 void visualize(string inputFile, string outputFile);
 void score(string inputFile);
 
@@ -42,6 +43,7 @@ int main (int argc, char* argv[])
         ("v,visualize", "visualize file", cxxopts::value<string>())
         ("o,output", "output file", cxxopts::value<string>())
         ("s,score", "get a score of the ordering of the matrix")
+        ("e,email", "set the email address for the NEOS job", cxxopts::value<string>())
     ;
 
     cxxopts::ParseResult result;
@@ -63,13 +65,17 @@ int main (int argc, char* argv[])
         return EXIT_SUCCESS;
     }
 
-    function<void(SquareMatrixF&)> orderFunction;
+    if (result.count("email")) {
+        NEOSJob::defaultEmail = result["email"].as<string>();
+    }
+
+    function<void(SquareMatrix&)> orderFunction;
     if (result.count("orderRaw")) {
-        orderFunction = [](SquareMatrixF& matrix) {
+        orderFunction = [](SquareMatrix& matrix) {
             matrix.orderTSPRaw();
         };
     } else if (result.count("orderMoransI")) {
-        orderFunction = [](SquareMatrixF& matrix) {
+        orderFunction = [](SquareMatrix& matrix) {
             matrix.orderTSPMoransI();
         };
     }
@@ -104,7 +110,7 @@ int main (int argc, char* argv[])
 
             if (result.count("visualize")) {
                 string outputFile = result.count("visualize") ? result["visualize"].as<string>() : "";
-                visualize(inputFile, outputFile);
+                visualize(inputFile, outputFile); //thisone likes to give segmentation faults sometimes...
             }
         }
     }
@@ -112,8 +118,8 @@ int main (int argc, char* argv[])
     return EXIT_SUCCESS;
 }
 
-void order(string inputFile, string outputFile, function<void(SquareMatrixF&)> orderFunction) {
-    SquareMatrixF distanceMatrix = GraphReader::loadDistanceMatrix(inputFile);
+void order(string inputFile, string outputFile, function<void(SquareMatrix&)> orderFunction) {
+    SquareMatrix distanceMatrix = GraphReader::loadDistanceMatrix(inputFile);
     int matrixSize = distanceMatrix.getSize();
 
     for (int i = 0; i < matrixSize; i++)
@@ -124,30 +130,15 @@ void order(string inputFile, string outputFile, function<void(SquareMatrixF&)> o
         }
     }
 
-    SquareMatrixF newDistanceMatrix(matrixSize + 1);
-    for (int i = 0; i < matrixSize; i++)
-    {
-        for (int j = 0; j < matrixSize; j++)
-        {
-            newDistanceMatrix.setElement(i + 1, j + 1, distanceMatrix.getElement(i, j));
-        }
-
-        newDistanceMatrix.setElement(i, 0, 0);
-        newDistanceMatrix.setElement(0, i, 0);
-
-        newDistanceMatrix.setMeaning(i, distanceMatrix.getMeaning(i));
-        newDistanceMatrix.setPartOfSpeech(i, distanceMatrix.getPartOfSpeech(i));
-    }
-
-    orderFunction(newDistanceMatrix);
+    orderFunction(distanceMatrix);
 
     if (!outputFile.empty()) {
-        newDistanceMatrix.toInFullMatrix(const_cast<char*>(outputFile.c_str()));
+        distanceMatrix.toInFullMatrix(const_cast<char*>(outputFile.c_str()));
     }
 }
 
 void visualize(string inputFile, string outputFile) {
-    SquareMatrixF distanceMatrix = GraphReader::loadDistanceMatrix(inputFile);
+    SquareMatrix distanceMatrix = GraphReader::loadDistanceMatrix(inputFile);
 
     if (!outputFile.empty()) {
         distanceMatrix.toDetailedImage(60000, ColorScheme::spectral(), 0, false, false).printImageAsBMP(const_cast<char*>(outputFile.c_str()));
@@ -155,7 +146,7 @@ void visualize(string inputFile, string outputFile) {
 }
 
 void score(string inputFile) {
-    SquareMatrixF distanceMatrix = GraphReader::loadDistanceMatrix(inputFile);
+    SquareMatrix distanceMatrix = GraphReader::loadDistanceMatrix(inputFile);
     cout << "The score of matrix \"" << inputFile << "\" is: " << distanceMatrix.score() << endl;
     cout << "The Moran's I of the matrix is: " << distanceMatrix.moransI() << endl;
 }

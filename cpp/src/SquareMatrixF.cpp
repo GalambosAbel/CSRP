@@ -16,7 +16,7 @@
 
 using namespace std;
 
-SquareMatrixF::SquareMatrixF(int size)
+SquareMatrix::SquareMatrix(int size)
 {
     _size = size;
     maxValue = DBL_MIN;
@@ -26,7 +26,7 @@ SquareMatrixF::SquareMatrixF(int size)
     matrixBuffer = (double *)malloc(sizeof(double) * _size * _size);
 }
 
-SquareMatrixF::SquareMatrixF(SquareMatrixF &source)
+SquareMatrix::SquareMatrix(SquareMatrix &source)
 {
     _size = source._size;
     maxValue = source.maxValue;
@@ -38,7 +38,7 @@ SquareMatrixF::SquareMatrixF(SquareMatrixF &source)
     memcpy(matrixBuffer, source.matrixBuffer, sizeof(double) * _size * _size);
 }
 
-void SquareMatrixF::setElement(int x, int y, double value)
+void SquareMatrix::setElement(int x, int y, double value)
 {
     if (value > maxValue)
         setMaxValue(value);
@@ -47,9 +47,9 @@ void SquareMatrixF::setElement(int x, int y, double value)
     matrixBuffer[x + y * _size] = value;
 }
 
-void SquareMatrixF::order(vector<int> order)
+void SquareMatrix::order(vector<int> order)
 {
-    SquareMatrixF copy(*this);
+    SquareMatrix copy(*this);
 
     // order meanings
     for (int i = 0; i < _size; i++) {
@@ -69,12 +69,12 @@ void SquareMatrixF::order(vector<int> order)
     }
 }
 
-Image SquareMatrixF::toImage(double maxDist, int offset, bool flipVertical, bool flipHorizontal)
+Image SquareMatrix::toImage(double maxDist, int offset, bool flipVertical, bool flipHorizontal)
 {
     return toImage(maxDist, ColorScheme::greyscale(), offset, flipVertical, flipHorizontal);
 }
 
-Image SquareMatrixF::toImage(double maxDist, ColorScheme *colorScheme, int offset, bool flipVertical, bool flipHorizontal)
+Image SquareMatrix::toImage(double maxDist, ColorScheme *colorScheme, int offset, bool flipVertical, bool flipHorizontal)
 {
     Image image(_size, _size, 3);
     offset = (offset % _size + _size) % _size;
@@ -97,7 +97,7 @@ Image SquareMatrixF::toImage(double maxDist, ColorScheme *colorScheme, int offse
     return image;
 }
 
-Image SquareMatrixF::toDetailedImage(double maxDist, ColorScheme *colorScheme, int offset, bool flipVertical, bool flipHorizontal)
+Image SquareMatrix::toDetailedImage(double maxDist, ColorScheme *colorScheme, int offset, bool flipVertical, bool flipHorizontal)
 {
     // allocate (legend + matrix)^2 for the image
     int legendSize = 100;
@@ -140,7 +140,7 @@ Image SquareMatrixF::toDetailedImage(double maxDist, ColorScheme *colorScheme, i
     return image;
 }
 
-string SquareMatrixF::toTspFullMatrix(string tspName, string comment)
+string SquareMatrix::toTspFullMatrix(string tspName, string comment)
 {
     string output = "";
 
@@ -164,7 +164,7 @@ string SquareMatrixF::toTspFullMatrix(string tspName, string comment)
     return output;
 }
 
-void SquareMatrixF::toNeosInput(char *fileNameWithPath, char *tspName, char *comment)
+void SquareMatrix::toNeosInput(char *fileNameWithPath, char *tspName, char *comment)
 {
     std::string nameString = "NAME: ";
     std::string typeString = "TYPE: TSP";
@@ -203,7 +203,7 @@ void SquareMatrixF::toNeosInput(char *fileNameWithPath, char *tspName, char *com
     output.close();
 }
 
-void SquareMatrixF::toInFullMatrix(char *fileNameWithPath)
+void SquareMatrix::toInFullMatrix(char *fileNameWithPath)
 {
     std::ofstream output(fileNameWithPath);
     output << _size << std::endl;
@@ -234,16 +234,16 @@ void SquareMatrixF::toInFullMatrix(char *fileNameWithPath)
     output.close();
 }
 
-SquareMatrixF::~SquareMatrixF()
+SquareMatrix::~SquareMatrix()
 {
     free(wordMeanings);
     free(partOfSpeech);
     free(matrixBuffer);
 }
 
-void SquareMatrixF::flipVertical()
+void SquareMatrix::flipVertical()
 {
-    SquareMatrixF copy(*this);
+    SquareMatrix copy(*this);
 
     for (int x = 0; x < _size; x++)
     {
@@ -255,9 +255,9 @@ void SquareMatrixF::flipVertical()
     }
 }
 
-void SquareMatrixF::flipHorizontal()
+void SquareMatrix::flipHorizontal()
 {
-    SquareMatrixF copy(*this);
+    SquareMatrix copy(*this);
 
     for (int x = 0; x < _size; x++)
     {
@@ -269,9 +269,9 @@ void SquareMatrixF::flipHorizontal()
     }
 }
 
-void SquareMatrixF::offset(int offset)
+void SquareMatrix::offset(int offset)
 {
-    SquareMatrixF copy(*this);
+    SquareMatrix copy(*this);
     offset = (offset % _size + _size) % _size;
 
     for (int x = 0; x < _size; x++)
@@ -285,7 +285,7 @@ void SquareMatrixF::offset(int offset)
     }
 }
 
-void SquareMatrixF::swap(int a, int b)
+void SquareMatrix::swap(int a, int b)
 {
     int i = std::min(a, b);
     int j = std::max(a, b);
@@ -441,10 +441,10 @@ void SquareMatrixF::swap(int a, int b)
     }
 }
 
-SquareMatrixF SquareMatrixF::moransIDistanceMatrix()
+SquareMatrix SquareMatrix::moransIDistanceMatrix()
 {
     moransI();
-    SquareMatrixF newMatrix(_size);
+    SquareMatrix newMatrix(_size);
 
     double min = 0; // since we know we have '0' elements already
     double max = 0;
@@ -466,9 +466,10 @@ SquareMatrixF SquareMatrixF::moransIDistanceMatrix()
         }
 
         if (i % 100 == 1) {
-            cout << "Building MoransI distance matrix: " << fixed << setprecision(2) << ((double)i / _size) * 100 << "\% complete" << endl;
+            cout << "\rBuilding MoransI distance matrix: " << fixed << setprecision(2) << setfill('0') << ((double)i / _size) * 100 << "\% complete" << flush;
         }
     }
+    cout << "\rBuilding MoransI distance matrix: " << fixed << setprecision(2) << setfill('0') << 100 << "\% complete!" << endl;
 
     // normalize all the values, notice that we add/multiply all the values by the same constants, and therefore optimal tsp is not inhibited.
     //(note: multiplication is only done with positives)
@@ -490,7 +491,7 @@ SquareMatrixF SquareMatrixF::moransIDistanceMatrix()
     return newMatrix;
 }
 
-double SquareMatrixF::moransI()
+double SquareMatrix::moransI()
 {
     // calculate mean and variance
     double sum = 0;
@@ -534,28 +535,31 @@ double SquareMatrixF::moransI()
     return out;
 }
 
-double SquareMatrixF::score() {
+double SquareMatrix::score() {
     double entropy = 0;
     int seqLength = 1;
 
     for (int i = 1; i < getSize(); i++) {
         if (getMeaning(i - 1) == getMeaning(i)) seqLength++;
         else {
-            entropy -= log((double)(seqLength)) * (double)(seqLength);
+            double seqProbability = (double)seqLength / _size;
+            entropy -= log(seqProbability) * seqProbability;
             seqLength = 1;
         }
     }
+    double seqProbability = (double)seqLength / _size;
+    entropy -= log(seqProbability) * seqProbability; //for the final segment
 
     return entropy;
 }
 
-double SquareMatrixF::simAnnealingOrderMoransI(int iters, double startTemp)
+double SquareMatrix::simAnnealingOrderMoransI(int iters, double startTemp)
 {
     std::random_device rd;
     std::mt19937 g(rd());
     std::uniform_int_distribution<> distrib(0, _size - 1);
 
-    SquareMatrixF *bestMatrix = new SquareMatrixF(*this);
+    SquareMatrix *bestMatrix = new SquareMatrix(*this);
     double currentMoransI = moransI();
     std::cout << "Initial Moran's I: " << currentMoransI << std::endl;
 
@@ -588,7 +592,7 @@ double SquareMatrixF::simAnnealingOrderMoransI(int iters, double startTemp)
             {
                 bestMoransI = currentMoransI;
                 delete bestMatrix;
-                bestMatrix = new SquareMatrixF(*this);
+                bestMatrix = new SquareMatrix(*this);
             }
         }
         else
@@ -617,12 +621,12 @@ double SquareMatrixF::simAnnealingOrderMoransI(int iters, double startTemp)
     return bestMoransI;
 }
 
-vector<int> SquareMatrixF::getTSPOrder() {
+vector<int> SquareMatrix::getTSPOrder() {
     NEOSJob job = NEOSJob();
     job.setCategory("co");
     job.setSolver("concorde");
     job.setInputMethod("TSP");
-    job.setEmail("pavinik9@gmail.com");
+    job.setEmail(NEOSJob::defaultEmail);
     job.setTsp(toTspFullMatrix());
     job.setAlgType("con");
     job.setRDType("fixed");
@@ -631,18 +635,53 @@ vector<int> SquareMatrixF::getTSPOrder() {
     return job.submit();
 }
 
-void SquareMatrixF::orderTSPRaw() {
-    vector<int> o = getTSPOrder();
-    order(o);
-}
+void SquareMatrix::orderTSPRaw() {
+    SquareMatrix newDistanceMatrix = getExtendedMatrix();
 
-void SquareMatrixF::orderTSPMoransI() {
-    SquareMatrixF distanceMatrix = moransIDistanceMatrix();
+    //only this line is different for different orderings
+    SquareMatrix distanceMatrix = newDistanceMatrix;
 
     vector<int> o = distanceMatrix.getTSPOrder();
-    //vector<int> o_prime;
-    //for (int i = 1; i < o.size(); i++) {
-    //    o_prime.push_back(o[i] - 1);
-    //}
-    order(o);
+    vector<int> o_prime = getUnExtendedOrder(o);
+    order(o_prime);
+}
+
+void SquareMatrix::orderTSPMoransI() {
+    SquareMatrix newDistanceMatrix = getExtendedMatrix();
+
+    //only this line is different for different orderings
+    SquareMatrix distanceMatrix = newDistanceMatrix.moransIDistanceMatrix();
+
+    vector<int> o = distanceMatrix.getTSPOrder();
+    vector<int> o_prime = getUnExtendedOrder(o);
+    order(o_prime);
+}
+
+SquareMatrix SquareMatrix::getExtendedMatrix() {
+    SquareMatrix newDistanceMatrix(getSize() + 1);
+    for (int i = 0; i < getSize(); i++)
+    {
+        for (int j = 0; j < getSize(); j++)
+        {
+            newDistanceMatrix.setElement(i + 1, j + 1, getElement(i, j));
+        }
+
+        newDistanceMatrix.setElement(i, 0, 0);
+        newDistanceMatrix.setElement(0, i, 0);
+
+        newDistanceMatrix.setMeaning(i+1, getMeaning(i));
+        newDistanceMatrix.setPartOfSpeech(i+1, getPartOfSpeech(i));
+    }
+    newDistanceMatrix.setMeaning(0, 0);
+    newDistanceMatrix.setPartOfSpeech(0, 0);
+
+    return newDistanceMatrix;
+}
+
+vector<int> SquareMatrix::getUnExtendedOrder(vector<int> o){
+    vector<int> o_prime;
+    for (int i = 1; i < o.size(); i++) {
+       o_prime.push_back(o[i] - 1);
+    }
+    return o_prime;
 }

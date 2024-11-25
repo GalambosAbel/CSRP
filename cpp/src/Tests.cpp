@@ -23,7 +23,7 @@ void runAllTests() {
 
 void readWriteTspMatrixTest() {
     cout << "ReadWriteTest started! ";
-    SquareMatrixF mat = GraphReader::readTsp_Explicit_FullMatrix("..\\testFiles\\testInputs\\tspTest.tsp");
+    SquareMatrix mat = GraphReader::readTsp_Explicit_FullMatrix("..\\testFiles\\testInputs\\tspTest.tsp");
     mat.toImage(100, ColorScheme::spectral()).printImageAsBMP("..\\testFiles\\testOutputs\\tspTestMatrix.bmp");
     mat.toTspFullMatrix("..\\testFiles\\testOutputs\\writeTest.tsp");
     cout << "ReadWriteTest finished!" << endl;
@@ -37,7 +37,7 @@ void matrixPipelineTest(char* tspFile, char* tourFile) {
     int matrixSize = coords.size();
 
     //build distance matrix
-    SquareMatrixF distanceMatrix(matrixSize);
+    SquareMatrix distanceMatrix(matrixSize);
     double maxDist = 0;
     for (int i = 0; i < matrixSize; i++)
     {
@@ -75,7 +75,7 @@ void adjMatrixToImageTest(char* adjMatrixFile, int matrixSize) {
     FILE* file = fopen(adjMatrixFile, "r");
 
     //build distance matrix
-    SquareMatrixF distanceMatrix(matrixSize);
+    SquareMatrix distanceMatrix(matrixSize);
     double maxDist = 0;
     for (int i = 0; i < matrixSize; i++)
     {
@@ -125,7 +125,7 @@ void prettyRainbowTest() {
 
 void colorSchemeMatrixTest(){
     cout << "ColorSchemeTest started! ";
-    SquareMatrixF colorMatrix(1000);
+    SquareMatrix colorMatrix(1000);
 
     for (int i = 0; i < 1000; i++)
     {
@@ -147,7 +147,7 @@ void moransITest() {
     // 1 1 0 1 0 1
     // 1 0 1 0 1 0
 
-    SquareMatrixF* mat = new SquareMatrixF(6);
+    SquareMatrix* mat = new SquareMatrix(6);
     mat->setElement(0, 0, 0);
     mat->setElement(0, 1, 1);
     mat->setElement(0, 2, 0);

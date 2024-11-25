@@ -37,6 +37,8 @@ class NEOSJob {
     string getComment();
 
     vector<int> submit();
+
+    static string defaultEmail;
   private:
     bool serverUp;
 

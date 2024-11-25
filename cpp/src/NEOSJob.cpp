@@ -9,6 +9,8 @@
 
 using namespace std;
 
+string NEOSJob::defaultEmail = "";
+
 NEOSJob::NEOSJob() {
     serverUrl = "https://neos-server.org:3333";
     category = "";
@@ -145,7 +147,7 @@ vector<int> NEOSJob::submit() {
     xml += "<inputMethod>" + inputMethod + "</inputMethod>\n";
     xml += "<email><![CDATA[" + email + "]]></email>\n";
     xml += "<dat1><![CDATA[" + dat1 + "]]></dat1>\n";
-    xml += "<dat2><![CDATA[" + dat1 + "]]></dat2>\n";
+    xml += "<dat2><![CDATA[" + dat2 + "]]></dat2>\n";
     xml += "<tsp><![CDATA[" + tsp + "]]></tsp>\n";
     xml += "<ALGTYPE><![CDATA[" + algType + "]]></ALGTYPE>\n";
     xml += "<RDTYPE><![CDATA[" + rdType + "]]></RDTYPE>\n";

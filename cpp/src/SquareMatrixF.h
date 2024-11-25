@@ -1,5 +1,5 @@
-#ifndef SQUARE_MATRIX_F
-#define SQUARE_MATRIX_F
+#ifndef SQUARE_MATRIX
+#define SQUARE_MATRIX
 
 #include "Image.h"
 #include "ColorScheme.h"
@@ -8,12 +8,12 @@
 
 using namespace std;
 
-class SquareMatrixF
+class SquareMatrix
 {
 public:
-    SquareMatrixF(int size);
-    SquareMatrixF(SquareMatrixF &source);
-    ~SquareMatrixF();
+    SquareMatrix(int size);
+    SquareMatrix(SquareMatrix &source);
+    ~SquareMatrix();
 
     void setElement(int x, int y, double value);
     void setMaxValue(double value) { maxValue = value; };
@@ -42,7 +42,7 @@ public:
     double moransI();
     double score();
     double simAnnealingOrderMoransI(int iters, double startTemp);
-    SquareMatrixF moransIDistanceMatrix();
+    SquareMatrix moransIDistanceMatrix();
 
     void orderTSPRaw();
     void orderTSPMoransI();
@@ -52,6 +52,9 @@ private:
     void flipVertical();
     void flipHorizontal();
     void offset(int offset);
+
+    SquareMatrix getExtendedMatrix();
+    vector<int> getUnExtendedOrder(vector<int> o);
 
     int _size;
     double maxValue;

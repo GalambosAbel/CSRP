@@ -35,7 +35,7 @@ class GraphReader {
          * 
          * @returns The matrix that represents the input file.
          */
-        static SquareMatrixF readTsp_Explicit_FullMatrix(char* tspFileNameWithPath);
+        static SquareMatrix readTsp_Explicit_FullMatrix(char* tspFileNameWithPath);
 
         /**
          * Reads a .cyc file, and returns a vector with the permutation.
@@ -59,7 +59,7 @@ class GraphReader {
          * 
          * @returns A SquareMatrixF that contains the distance matrix.
          */
-        static SquareMatrixF loadDistanceMatrix(string fileNameWithPath);
+        static SquareMatrix loadDistanceMatrix(string fileNameWithPath);
     
     private:
         /**
