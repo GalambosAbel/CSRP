@@ -40,6 +40,7 @@ public:
 
     void swap(int i, int j);
     double moransI();
+    double score();
     double simAnnealingOrderMoransI(int iters, double startTemp);
     SquareMatrixF moransIDistanceMatrix();
 
