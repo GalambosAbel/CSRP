@@ -466,10 +466,10 @@ SquareMatrix SquareMatrix::moransIDistanceMatrix()
         }
 
         if (i % 100 == 1) {
-            cout << "\rBuilding MoransI distance matrix: " << fixed << setprecision(2) << setfill('0') << ((double)i / _size) * 100 << "\% complete" << flush;
+            cout << "\rBuilding MoransI distance matrix: " << (int)(((double)i / _size) * 100) << "\% complete" << flush;
         }
     }
-    cout << "\rBuilding MoransI distance matrix: " << fixed << setprecision(2) << setfill('0') << 100 << "\% complete!" << endl;
+    cout << "\rBuilding MoransI distance matrix: " << 100 << "\% complete!" << endl;
 
     // normalize all the values, notice that we add/multiply all the values by the same constants, and therefore optimal tsp is not inhibited.
     //(note: multiplication is only done with positives)
@@ -535,7 +535,7 @@ double SquareMatrix::moransI()
     return out;
 }
 
-double SquareMatrix::score() {
+double SquareMatrix::entropyScore() {
     double entropy = 0;
     int seqLength = 1;
 
@@ -551,6 +551,16 @@ double SquareMatrix::score() {
     entropy -= log(seqProbability) * seqProbability; //for the final segment
 
     return entropy;
+}
+
+double SquareMatrix::switchingScore() {
+    double score = 0;
+
+    for (int i = 1; i < getSize(); i++) {
+        if (getMeaning(i - 1) != getMeaning(i)) score++;
+    }
+
+    return score;
 }
 
 double SquareMatrix::simAnnealingOrderMoransI(int iters, double startTemp)

@@ -43,5 +43,6 @@ images/
 *.in
 *.ilk
 *.pdb
+out/
 
 signature_dists/

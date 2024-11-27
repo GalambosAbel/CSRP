@@ -84,7 +84,7 @@ int main (int argc, char* argv[])
         string inputFile = result["input"].as<string>();
 
         if (result.count("score")) {
-            cout << "Input matrix score" << endl;
+            cout << "Input matrix score:" << endl;
             score(inputFile);
         }
 
@@ -95,7 +95,7 @@ int main (int argc, char* argv[])
             string outputPNGFile = result.count("visualize") ? result["visualize"].as<string>() : "";
             visualize(outputInFile, outputPNGFile);
             if (result.count("score")){
-                cout << "Ordered matrix score" << endl;
+                cout << "Ordered matrix score:" << endl;
                 score(outputInFile);
             }
         } else {
@@ -110,7 +110,7 @@ int main (int argc, char* argv[])
 
             if (result.count("visualize")) {
                 string outputFile = result.count("visualize") ? result["visualize"].as<string>() : "";
-                visualize(inputFile, outputFile); //thisone likes to give segmentation faults sometimes...
+                visualize(inputFile, outputFile);
             }
         }
     }
@@ -147,6 +147,7 @@ void visualize(string inputFile, string outputFile) {
 
 void score(string inputFile) {
     SquareMatrix distanceMatrix = GraphReader::loadDistanceMatrix(inputFile);
-    cout << "The score of matrix \"" << inputFile << "\" is: " << distanceMatrix.score() << endl;
+    cout << "The entropy score of matrix \"" << inputFile << "\" is: " << distanceMatrix.entropyScore() << endl;
+    cout << "The number of switches in the matrix is: " << distanceMatrix.switchingScore() << endl;
     cout << "The Moran's I of the matrix is: " << distanceMatrix.moransI() << endl;
 }
