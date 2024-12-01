@@ -35,7 +35,7 @@ public:
     Image toDetailedImage(double maxDist, ColorScheme* colorScheme, int offset = 0, bool flipVertical = false, bool flipHorizontal = false);
 
     string toTspFullMatrix(string tspName = "tsplib from matrix", string comment = "");
-    void toNeosInput(char *fileNameWithPath, char *tspName = "tsplib from matrix", char *comment = "");
+    SquareMatrixF toNeosInput();
     void toInFullMatrix(char *fileNameWithPath);
 
     void swap(int i, int j);
@@ -43,6 +43,8 @@ public:
     double score();
     double simAnnealingOrderMoransI(int iters, double startTemp);
     SquareMatrixF moransIDistanceMatrix();
+
+    vector<int> extraNodeOrderToNormal(vector<int> order);
 
     void orderTSPRaw();
     void orderTSPMoransI();
