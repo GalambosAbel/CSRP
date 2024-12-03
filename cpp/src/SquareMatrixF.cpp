@@ -164,43 +164,26 @@ string SquareMatrix::toTspFullMatrix(string tspName, string comment)
     return output;
 }
 
-void SquareMatrix::toNeosInput(char *fileNameWithPath, char *tspName, char *comment)
+SquareMatrix SquareMatrix::toNeosInput()
 {
-    std::string nameString = "NAME: ";
-    std::string typeString = "TYPE: TSP";
-    std::string commentString = "COMMENT: ";
-    std::string dimensionString = "DIMENSION: ";
-    std::string edgeWeightTypeString = "EDGE_WEIGHT_TYPE: EXPLICIT";
-    std::string edgeWeightFormatString = "EDGE_WEIGHT_FORMAT: FULL_MATRIX";
-    std::string dataStartString = "EDGE_WEIGHT_SECTION: ";
-
-    std::ofstream output(fileNameWithPath);
-
-    output << nameString << tspName << std::endl;
-    output << typeString << std::endl;
-    output << commentString << comment << std::endl;
-    output << dimensionString << (_size + 1) << std::endl;
-    output << edgeWeightTypeString << std::endl;
-    output << edgeWeightFormatString << std::endl;
-    output << dataStartString << std::endl;
-
-    for (int i = 0; i <= _size; i++)
+    SquareMatrix newDistanceMatrix(getSize() + 1);
+    for (int i = 0; i < getSize(); i++)
     {
-        output << 0 << " ";
-    }
-    output << "" << std::endl;
-
-    for (int i = 0; i < _size; i++)
-    {
-        output << 0 << " ";
-        for (int j = 0; j < _size; j++)
+        for (int j = 0; j < getSize(); j++)
         {
-            output << 100000 * getElement(j, i) << " ";
+            newDistanceMatrix.setElement(i + 1, j + 1, 10000 * getElement(i, j));
         }
-        output << "" << std::endl;
-    }
 
-    output.close();
+        newDistanceMatrix.setElement(i, 0, 0);
+        newDistanceMatrix.setElement(0, i, 0);
+
+        newDistanceMatrix.setMeaning(i+1, getMeaning(i));
+        newDistanceMatrix.setPartOfSpeech(i+1, getPartOfSpeech(i));
+    }
+    newDistanceMatrix.setMeaning(0, 0);
+    newDistanceMatrix.setPartOfSpeech(0, 0);
+
+    return newDistanceMatrix;
 }
 
 void SquareMatrix::toInFullMatrix(char *fileNameWithPath)
@@ -482,7 +465,6 @@ SquareMatrix SquareMatrix::moransIDistanceMatrix()
 
             val -= min;
             val /= range; // is now in [0,1]
-            val *= 10000; // so NEOS doesn't complain, could maybe be less/more precise, 4digits is arbitrary
 
             newMatrix.setElement(i, j, (int)val);
         }
@@ -637,7 +619,7 @@ vector<int> SquareMatrix::getTSPOrder() {
     job.setSolver("concorde");
     job.setInputMethod("TSP");
     job.setEmail(NEOSJob::defaultEmail);
-    job.setTsp(toTspFullMatrix());
+    job.setTsp(toNeosInput().toTspFullMatrix());
     job.setAlgType("con");
     job.setRDType("fixed");
     job.setPLType("no");
@@ -646,52 +628,27 @@ vector<int> SquareMatrix::getTSPOrder() {
 }
 
 void SquareMatrix::orderTSPRaw() {
-    SquareMatrix newDistanceMatrix = getExtendedMatrix();
+    // SquareMatrix distanceMatrix = *this;
+    // vector<int> o = distanceMatrix.getTSPOrder();
 
-    //only this line is different for different orderings
-    SquareMatrix distanceMatrix = newDistanceMatrix;
-
-    vector<int> o = distanceMatrix.getTSPOrder();
-    vector<int> o_prime = getUnExtendedOrder(o);
-    order(o_prime);
+    vector<int> extraOrder = getTSPOrder();
+    vector<int> normalOrder = extraNodeOrderToNormal(extraOrder);
+    order(normalOrder);
 }
 
 void SquareMatrix::orderTSPMoransI() {
-    SquareMatrix newDistanceMatrix = getExtendedMatrix();
-
     //only this line is different for different orderings
-    SquareMatrix distanceMatrix = newDistanceMatrix.moransIDistanceMatrix();
+    SquareMatrix distanceMatrix = moransIDistanceMatrix();
 
-    vector<int> o = distanceMatrix.getTSPOrder();
-    vector<int> o_prime = getUnExtendedOrder(o);
-    order(o_prime);
+    vector<int> extraOrder = distanceMatrix.getTSPOrder();
+    vector<int> normalOrder = extraNodeOrderToNormal(extraOrder);
+    order(normalOrder);
 }
 
-SquareMatrix SquareMatrix::getExtendedMatrix() {
-    SquareMatrix newDistanceMatrix(getSize() + 1);
-    for (int i = 0; i < getSize(); i++)
-    {
-        for (int j = 0; j < getSize(); j++)
-        {
-            newDistanceMatrix.setElement(i + 1, j + 1, getElement(i, j));
-        }
-
-        newDistanceMatrix.setElement(i, 0, 0);
-        newDistanceMatrix.setElement(0, i, 0);
-
-        newDistanceMatrix.setMeaning(i+1, getMeaning(i));
-        newDistanceMatrix.setPartOfSpeech(i+1, getPartOfSpeech(i));
+vector<int> SquareMatrix::extraNodeOrderToNormal(vector<int> extraOrder){
+    vector<int> normalOrder;
+    for (int i = 1; i < extraOrder.size(); i++) {
+       normalOrder.push_back(extraOrder[i] - 1);
     }
-    newDistanceMatrix.setMeaning(0, 0);
-    newDistanceMatrix.setPartOfSpeech(0, 0);
-
-    return newDistanceMatrix;
-}
-
-vector<int> SquareMatrix::getUnExtendedOrder(vector<int> o){
-    vector<int> o_prime;
-    for (int i = 1; i < o.size(); i++) {
-       o_prime.push_back(o[i] - 1);
-    }
-    return o_prime;
+    return normalOrder;
 }

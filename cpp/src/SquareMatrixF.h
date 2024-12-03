@@ -35,7 +35,7 @@ public:
     Image toDetailedImage(double maxDist, ColorScheme* colorScheme, int offset = 0, bool flipVertical = false, bool flipHorizontal = false);
 
     string toTspFullMatrix(string tspName = "tsplib from matrix", string comment = "");
-    void toNeosInput(char *fileNameWithPath, char *tspName = "tsplib from matrix", char *comment = "");
+    SquareMatrix toNeosInput();
     void toInFullMatrix(char *fileNameWithPath);
 
     void swap(int i, int j);
@@ -54,8 +54,7 @@ private:
     void flipHorizontal();
     void offset(int offset);
 
-    SquareMatrix getExtendedMatrix();
-    vector<int> getUnExtendedOrder(vector<int> o);
+    vector<int> extraNodeOrderToNormal(vector<int> extraOrder);
 
     int _size;
     double maxValue;

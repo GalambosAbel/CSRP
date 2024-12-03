@@ -120,15 +120,6 @@ int main (int argc, char* argv[])
 
 void order(string inputFile, string outputFile, function<void(SquareMatrix&)> orderFunction) {
     SquareMatrix distanceMatrix = GraphReader::loadDistanceMatrix(inputFile);
-    int matrixSize = distanceMatrix.getSize();
-
-    for (int i = 0; i < matrixSize; i++)
-    {
-        for (int j = 0; j < matrixSize; j++)
-        {
-            distanceMatrix.setElement(i, j, distanceMatrix.getElement(i, j) * 100000);
-        }
-    }
 
     orderFunction(distanceMatrix);
 
@@ -141,7 +132,7 @@ void visualize(string inputFile, string outputFile) {
     SquareMatrix distanceMatrix = GraphReader::loadDistanceMatrix(inputFile);
 
     if (!outputFile.empty()) {
-        distanceMatrix.toDetailedImage(60000, ColorScheme::spectral(), 0, false, false).printImageAsBMP(const_cast<char*>(outputFile.c_str()));
+        distanceMatrix.toDetailedImage(0.6, ColorScheme::spectral(), 0, false, false).printImageAsBMP(const_cast<char*>(outputFile.c_str()));
     }
 }
 
