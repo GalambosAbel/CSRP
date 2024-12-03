@@ -146,21 +146,16 @@ string SquareMatrixF::toTspFullMatrix(string tspName, string comment)
     output += "NAME: " + tspName + "\n";
     output += "TYPE: TSP \n";
     output += "COMMENT: " + comment + "\n";
-    output += "DIMENSION: " + to_string(_size + 1) + "\n";
+    output += "DIMENSION: " + to_string(_size) + "\n";
     output += "EDGE_WEIGHT_TYPE: EXPLICIT \n";
     output += "EDGE_WEIGHT_FORMAT: FULL_MATRIX \n";
     output += "EDGE_WEIGHT_SECTION: \n";
 
-    for (int i = 0; i <= _size; i++) {
-        output += "0 ";
-    }
-    output += "\n";
     for (int i = 0; i < _size; i++)
     {
-        output += "0 ";
         for (int j = 0; j < _size; j++)
         {
-            output += to_string((int)(100000*getElement(i,j))) + " ";
+            output += to_string((int)getElement(i,j)) + " ";
         }
         output += "\n";
     }
@@ -168,25 +163,43 @@ string SquareMatrixF::toTspFullMatrix(string tspName, string comment)
     return output;
 }
 
-SquareMatrixF SquareMatrixF::toNeosInput()
+void SquareMatrixF::toNeosInput(char *fileNameWithPath, char *tspName, char *comment)
 {
-    SquareMatrixF newDistanceMatrix = SquareMatrixF(_size + 1);
+    std::string nameString = "NAME: ";
+    std::string typeString = "TYPE: TSP";
+    std::string commentString = "COMMENT: ";
+    std::string dimensionString = "DIMENSION: ";
+    std::string edgeWeightTypeString = "EDGE_WEIGHT_TYPE: EXPLICIT";
+    std::string edgeWeightFormatString = "EDGE_WEIGHT_FORMAT: FULL_MATRIX";
+    std::string dataStartString = "EDGE_WEIGHT_SECTION: ";
+
+    std::ofstream output(fileNameWithPath);
+
+    output << nameString << tspName << std::endl;
+    output << typeString << std::endl;
+    output << commentString << comment << std::endl;
+    output << dimensionString << (_size + 1) << std::endl;
+    output << edgeWeightTypeString << std::endl;
+    output << edgeWeightFormatString << std::endl;
+    output << dataStartString << std::endl;
 
     for (int i = 0; i <= _size; i++)
     {
-        newDistanceMatrix.setElement(0,i,0);
+        output << 0 << " ";
     }
+    output << "" << std::endl;
 
     for (int i = 0; i < _size; i++)
     {
-        newDistanceMatrix.setElement(i,0,0);
+        output << 0 << " ";
         for (int j = 0; j < _size; j++)
         {
-            newDistanceMatrix.setElement(i, j, 100000 * getElement(j, i));
+            output << 100000 * getElement(j, i) << " ";
         }
+        output << "" << std::endl;
     }
 
-    return newDistanceMatrix;
+    output.close();
 }
 
 void SquareMatrixF::toInFullMatrix(char *fileNameWithPath)
@@ -527,11 +540,11 @@ double SquareMatrixF::score() {
     for (int i = 1; i < getSize(); i++) {
         if (getMeaning(i - 1) == getMeaning(i)) seqLength++;
         else {
-            entropy -= log((double)(seqLength)/_size) * (double)(seqLength)/_size;
+            entropy -= log((double)(seqLength)) * (double)(seqLength);
             seqLength = 1;
         }
     }
-    entropy -= log((double)(seqLength)/_size) * (double)(seqLength)/_size;
+
     return entropy;
 }
 
@@ -617,27 +630,18 @@ vector<int> SquareMatrixF::getTSPOrder() {
     return job.submit();
 }
 
-vector<int> SquareMatrixF::extraNodeOrderToNormal(vector<int> order) {
-    vector<int> o;
-
-    for (int i = 1; i < _size + 1; i++) {
-        o.push_back(order[i] - 1);
-    }
-
-    return o;
-}
-
 void SquareMatrixF::orderTSPRaw() {
-    //SquareMatrixF neosMatrix = toNeosInput();
-
     vector<int> o = getTSPOrder();
-    order(extraNodeOrderToNormal(o));
+    order(o);
 }
 
 void SquareMatrixF::orderTSPMoransI() {
     SquareMatrixF distanceMatrix = moransIDistanceMatrix();
 
     vector<int> o = distanceMatrix.getTSPOrder();
-
-    order(extraNodeOrderToNormal(o));
+    //vector<int> o_prime;
+    //for (int i = 1; i < o.size(); i++) {
+    //    o_prime.push_back(o[i] - 1);
+    //}
+    order(o);
 }
