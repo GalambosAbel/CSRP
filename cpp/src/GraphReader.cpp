@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include "GraphReader.h"
-#include "SquareMatrixF.h"
+#include "SquareMatrix.h"
 
 using namespace std;
 

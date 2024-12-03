@@ -577,32 +577,32 @@ src/NEOSJob.cpp.s:
 	$(MAKE) -f CMakeFiles/csrp.dir/build.make CMakeFiles/csrp.dir/src/NEOSJob.cpp.s
 .PHONY : src/NEOSJob.cpp.s
 
-src/SquareMatrixF.o: src/SquareMatrixF.cpp.o
+src/SquareMatrix.o: src/SquareMatrix.cpp.o
 
-.PHONY : src/SquareMatrixF.o
+.PHONY : src/SquareMatrix.o
 
 # target to build an object file
-src/SquareMatrixF.cpp.o:
-	$(MAKE) -f CMakeFiles/csrp.dir/build.make CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o
-.PHONY : src/SquareMatrixF.cpp.o
+src/SquareMatrix.cpp.o:
+	$(MAKE) -f CMakeFiles/csrp.dir/build.make CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o
+.PHONY : src/SquareMatrix.cpp.o
 
-src/SquareMatrixF.i: src/SquareMatrixF.cpp.i
+src/SquareMatrix.i: src/SquareMatrix.cpp.i
 
-.PHONY : src/SquareMatrixF.i
+.PHONY : src/SquareMatrix.i
 
 # target to preprocess a source file
-src/SquareMatrixF.cpp.i:
-	$(MAKE) -f CMakeFiles/csrp.dir/build.make CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.i
-.PHONY : src/SquareMatrixF.cpp.i
+src/SquareMatrix.cpp.i:
+	$(MAKE) -f CMakeFiles/csrp.dir/build.make CMakeFiles/csrp.dir/src/SquareMatrix.cpp.i
+.PHONY : src/SquareMatrix.cpp.i
 
-src/SquareMatrixF.s: src/SquareMatrixF.cpp.s
+src/SquareMatrix.s: src/SquareMatrix.cpp.s
 
-.PHONY : src/SquareMatrixF.s
+.PHONY : src/SquareMatrix.s
 
 # target to generate assembly for a file
-src/SquareMatrixF.cpp.s:
-	$(MAKE) -f CMakeFiles/csrp.dir/build.make CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.s
-.PHONY : src/SquareMatrixF.cpp.s
+src/SquareMatrix.cpp.s:
+	$(MAKE) -f CMakeFiles/csrp.dir/build.make CMakeFiles/csrp.dir/src/SquareMatrix.cpp.s
+.PHONY : src/SquareMatrix.cpp.s
 
 src/Tests.o: src/Tests.cpp.o
 
@@ -707,9 +707,9 @@ help:
 	@echo "... src/NEOSJob.o"
 	@echo "... src/NEOSJob.i"
 	@echo "... src/NEOSJob.s"
-	@echo "... src/SquareMatrixF.o"
-	@echo "... src/SquareMatrixF.i"
-	@echo "... src/SquareMatrixF.s"
+	@echo "... src/SquareMatrix.o"
+	@echo "... src/SquareMatrix.i"
+	@echo "... src/SquareMatrix.s"
 	@echo "... src/Tests.o"
 	@echo "... src/Tests.i"
 	@echo "... src/Tests.s"

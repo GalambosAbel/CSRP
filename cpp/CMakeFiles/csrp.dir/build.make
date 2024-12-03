@@ -122,18 +122,18 @@ CMakeFiles/csrp.dir/src/NEOSJob.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/csrp.dir/src/NEOSJob.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/NEOSJob.cpp -o CMakeFiles/csrp.dir/src/NEOSJob.cpp.s
 
-CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o: CMakeFiles/csrp.dir/flags.make
-CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o: src/SquareMatrixF.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o -c /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrixF.cpp
+CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o: CMakeFiles/csrp.dir/flags.make
+CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o: src/SquareMatrix.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/20221245/Desktop/CSRP/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o -c /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrix.cpp
 
-CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrixF.cpp > CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.i
+CMakeFiles/csrp.dir/src/SquareMatrix.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/csrp.dir/src/SquareMatrix.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrix.cpp > CMakeFiles/csrp.dir/src/SquareMatrix.cpp.i
 
-CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrixF.cpp -o CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.s
+CMakeFiles/csrp.dir/src/SquareMatrix.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/csrp.dir/src/SquareMatrix.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrix.cpp -o CMakeFiles/csrp.dir/src/SquareMatrix.cpp.s
 
 CMakeFiles/csrp.dir/src/Tests.cpp.o: CMakeFiles/csrp.dir/flags.make
 CMakeFiles/csrp.dir/src/Tests.cpp.o: src/Tests.cpp
@@ -168,7 +168,7 @@ csrp_OBJECTS = \
 "CMakeFiles/csrp.dir/src/GraphReader.cpp.o" \
 "CMakeFiles/csrp.dir/src/Image.cpp.o" \
 "CMakeFiles/csrp.dir/src/NEOSJob.cpp.o" \
-"CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o" \
+"CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o" \
 "CMakeFiles/csrp.dir/src/Tests.cpp.o" \
 "CMakeFiles/csrp.dir/src/main.cpp.o"
 
@@ -180,7 +180,7 @@ csrp: CMakeFiles/csrp.dir/src/ColorScheme.cpp.o
 csrp: CMakeFiles/csrp.dir/src/GraphReader.cpp.o
 csrp: CMakeFiles/csrp.dir/src/Image.cpp.o
 csrp: CMakeFiles/csrp.dir/src/NEOSJob.cpp.o
-csrp: CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o
+csrp: CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o
 csrp: CMakeFiles/csrp.dir/src/Tests.cpp.o
 csrp: CMakeFiles/csrp.dir/src/main.cpp.o
 csrp: CMakeFiles/csrp.dir/build.make

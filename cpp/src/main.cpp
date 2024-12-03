@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <functional>
-#include "SquareMatrixF.h"
+#include "SquareMatrix.h"
 #include "GraphReader.h"
 #include "Tests.h"
 #include "NEOSJob.h"
@@ -16,7 +16,7 @@ void visualize(string inputFile, string outputFile);
 void score(string inputFile);
 
 // int discretizeIn(char* tspFileName, char* discreteTspFileName, int matrixSize, int numBuckets) {
-//     SquareMatrixF distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(tspFileName);
+//     SquareMatrix distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(tspFileName);
 //
 //     for (int i = 0; i < matrixSize; i++)
 //     {

@@ -12,7 +12,7 @@ CMakeFiles/csrp.dir/src/GraphReader.cpp.o
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/GraphReader.cpp
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/GraphReader.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/Image.h
- /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrixF.h
+ /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrix.h
 CMakeFiles/csrp.dir/src/Image.cpp.o
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/BMPGenerator.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/Image.cpp
@@ -23,7 +23,7 @@ CMakeFiles/csrp.dir/src/NEOSJob.cpp.o
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/Image.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/NEOSJob.cpp
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/NEOSJob.h
- /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrixF.h
+ /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrix.h
  extern/xmlrpc-c/include/xmlrpc-c/base.h
  extern/xmlrpc-c/include/xmlrpc-c/base.hpp
  extern/xmlrpc-c/include/xmlrpc-c/c_util.h
@@ -37,18 +37,18 @@ CMakeFiles/csrp.dir/src/NEOSJob.cpp.o
  extern/xmlrpc-c/include/xmlrpc-c/girmem.hpp
  extern/xmlrpc-c/include/xmlrpc-c/timeout.hpp
  extern/xmlrpc-c/include/xmlrpc-c/util.h
-CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o
+CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/ColorScheme.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/Image.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/NEOSJob.h
- /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrixF.cpp
- /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrixF.h
+ /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrix.cpp
+ /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrix.h
 CMakeFiles/csrp.dir/src/Tests.cpp.o
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/BMPGenerator.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/ColorScheme.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/GraphReader.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/Image.h
- /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrixF.h
+ /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrix.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/Tests.cpp
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/Tests.h
 CMakeFiles/csrp.dir/src/main.cpp.o
@@ -56,7 +56,7 @@ CMakeFiles/csrp.dir/src/main.cpp.o
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/GraphReader.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/Image.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/NEOSJob.h
- /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrixF.h
+ /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/SquareMatrix.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/Tests.h
  /mnt/c/Users/20221245/Desktop/CSRP/cpp/src/main.cpp
  extern/cxxopts/include/cxxopts.hpp

@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "SquareMatrixF.h"
+#include "SquareMatrix.h"
 
 using namespace std;
 
@@ -54,10 +54,10 @@ class GraphReader {
         static vector<int> readNeosTour(string tourString);
 
         /**
-         * Reads a distance matrix from a file, and returns it as a SquareMatrixF.
+         * Reads a distance matrix from a file, and returns it as a SquareMatrix.
          * @param fileNameWithPath This is the path and name of the file that contains the distance matrix.
          * 
-         * @returns A SquareMatrixF that contains the distance matrix.
+         * @returns A SquareMatrix that contains the distance matrix.
          */
         static SquareMatrix loadDistanceMatrix(string fileNameWithPath);
     

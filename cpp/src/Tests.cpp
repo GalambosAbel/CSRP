@@ -6,7 +6,7 @@
 #include "BMPGenerator.h"
 #include "GraphReader.h"
 #include "Image.h"
-#include "SquareMatrixF.h"
+#include "SquareMatrix.h"
 #include "ColorScheme.h"
 #include "Tests.h"
 

@@ -11,7 +11,7 @@ CMakeFiles/csrp.dir/src/GraphReader.cpp.o: src/ColorScheme.h
 CMakeFiles/csrp.dir/src/GraphReader.cpp.o: src/GraphReader.cpp
 CMakeFiles/csrp.dir/src/GraphReader.cpp.o: src/GraphReader.h
 CMakeFiles/csrp.dir/src/GraphReader.cpp.o: src/Image.h
-CMakeFiles/csrp.dir/src/GraphReader.cpp.o: src/SquareMatrixF.h
+CMakeFiles/csrp.dir/src/GraphReader.cpp.o: src/SquareMatrix.h
 
 CMakeFiles/csrp.dir/src/Image.cpp.o: src/BMPGenerator.h
 CMakeFiles/csrp.dir/src/Image.cpp.o: src/Image.cpp
@@ -22,7 +22,7 @@ CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: src/GraphReader.h
 CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: src/Image.h
 CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: src/NEOSJob.cpp
 CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: src/NEOSJob.h
-CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: src/SquareMatrixF.h
+CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: src/SquareMatrix.h
 CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: extern/xmlrpc-c/include/xmlrpc-c/base.h
 CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: extern/xmlrpc-c/include/xmlrpc-c/base.hpp
 CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: extern/xmlrpc-c/include/xmlrpc-c/c_util.h
@@ -37,17 +37,17 @@ CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: extern/xmlrpc-c/include/xmlrpc-c/girmem.h
 CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: extern/xmlrpc-c/include/xmlrpc-c/timeout.hpp
 CMakeFiles/csrp.dir/src/NEOSJob.cpp.o: extern/xmlrpc-c/include/xmlrpc-c/util.h
 
-CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o: src/ColorScheme.h
-CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o: src/Image.h
-CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o: src/NEOSJob.h
-CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o: src/SquareMatrixF.cpp
-CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o: src/SquareMatrixF.h
+CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o: src/ColorScheme.h
+CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o: src/Image.h
+CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o: src/NEOSJob.h
+CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o: src/SquareMatrix.cpp
+CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o: src/SquareMatrix.h
 
 CMakeFiles/csrp.dir/src/Tests.cpp.o: src/BMPGenerator.h
 CMakeFiles/csrp.dir/src/Tests.cpp.o: src/ColorScheme.h
 CMakeFiles/csrp.dir/src/Tests.cpp.o: src/GraphReader.h
 CMakeFiles/csrp.dir/src/Tests.cpp.o: src/Image.h
-CMakeFiles/csrp.dir/src/Tests.cpp.o: src/SquareMatrixF.h
+CMakeFiles/csrp.dir/src/Tests.cpp.o: src/SquareMatrix.h
 CMakeFiles/csrp.dir/src/Tests.cpp.o: src/Tests.cpp
 CMakeFiles/csrp.dir/src/Tests.cpp.o: src/Tests.h
 
@@ -55,7 +55,7 @@ CMakeFiles/csrp.dir/src/main.cpp.o: src/ColorScheme.h
 CMakeFiles/csrp.dir/src/main.cpp.o: src/GraphReader.h
 CMakeFiles/csrp.dir/src/main.cpp.o: src/Image.h
 CMakeFiles/csrp.dir/src/main.cpp.o: src/NEOSJob.h
-CMakeFiles/csrp.dir/src/main.cpp.o: src/SquareMatrixF.h
+CMakeFiles/csrp.dir/src/main.cpp.o: src/SquareMatrix.h
 CMakeFiles/csrp.dir/src/main.cpp.o: src/Tests.h
 CMakeFiles/csrp.dir/src/main.cpp.o: src/main.cpp
 CMakeFiles/csrp.dir/src/main.cpp.o: extern/cxxopts/include/cxxopts.hpp

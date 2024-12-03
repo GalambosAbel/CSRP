@@ -4,7 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/csrp.dir/src/GraphReader.cpp.o"
   "CMakeFiles/csrp.dir/src/Image.cpp.o"
   "CMakeFiles/csrp.dir/src/NEOSJob.cpp.o"
-  "CMakeFiles/csrp.dir/src/SquareMatrixF.cpp.o"
+  "CMakeFiles/csrp.dir/src/SquareMatrix.cpp.o"
   "CMakeFiles/csrp.dir/src/Tests.cpp.o"
   "CMakeFiles/csrp.dir/src/main.cpp.o"
   "csrp"

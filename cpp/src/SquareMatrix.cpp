@@ -6,7 +6,7 @@
 #include <random>
 #include <iomanip>
 #include <cstring>
-#include "SquareMatrixF.h"
+#include "SquareMatrix.h"
 
 #include <cfloat>
 
