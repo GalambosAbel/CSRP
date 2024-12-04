@@ -462,8 +462,8 @@ SquareMatrix SquareMatrix::moransIDistanceMatrix()
     moransI();
     SquareMatrix newMatrix(_size);
 
-    double min = 0; // since we know we have '0' elements already
-    double max = 0;
+    double min = DBL_MAX; // since we know we have '0' elements already
+    double max = DBL_MIN;
     for (int i = 0; i < _size; i++)
     {
         for (int j = 0; j < _size; j++)
@@ -499,7 +499,7 @@ SquareMatrix SquareMatrix::moransIDistanceMatrix()
             val -= min;
             val /= range; // is now in [0,1]
 
-            newMatrix.setElement(i, j, (int)val);
+            newMatrix.setElement(i, j, val);
         }
     }
 
