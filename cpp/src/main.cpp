@@ -39,6 +39,7 @@ int main (int argc, char* argv[])
         ("test", "run all tests")
         ("r,orderRaw", "order a distance matrix based on distances in it")
         ("m,orderMoransI", "order a distance matrix based on a metric that optimizes Moran's I")
+        ("k,orderKevin", "order the matrix according to the metric recommended by Kevin")
         ("i,input", "input file", cxxopts::value<string>())
         ("v,visualize", "visualize file", cxxopts::value<string>())
         ("o,output", "output file", cxxopts::value<string>())
@@ -77,6 +78,10 @@ int main (int argc, char* argv[])
     } else if (result.count("orderMoransI")) {
         orderFunction = [](SquareMatrix& matrix) {
             matrix.orderTSPMoransI();
+        };
+    } else if (result.count("orderKevin")) {
+        orderFunction = [](SquareMatrix& matrix) {
+            matrix.orderTSPKevin();
         };
     }
 

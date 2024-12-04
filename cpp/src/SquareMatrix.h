@@ -45,8 +45,11 @@ public:
     double simAnnealingOrderMoransI(int iters, double startTemp);
     SquareMatrix moransIDistanceMatrix();
 
+    SquareMatrix KevinsDistanceMatrix();
+
     void orderTSPRaw();
     void orderTSPMoransI();
+    void orderTSPKevin();
 private:
     vector<int> getTSPOrder();
 

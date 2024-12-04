@@ -424,6 +424,39 @@ void SquareMatrix::swap(int a, int b)
     }
 }
 
+SquareMatrix SquareMatrix::KevinsDistanceMatrix(){
+    SquareMatrix newMatrix(_size);
+
+    //first normalize
+    double minimum = getMinValue();
+    double maximum = getMaxValue();
+    double range = maximum - minimum;
+    //now normal_val = (val-min)/range
+    for (int i = 0; i < _size; i++) 
+    {
+        for (int j = 0; j < _size; j++)
+        {
+            double sum = 0;
+            for (int z = 0; z < _size; z++)
+            {
+                double x = (getElement(i, z) - minimum) / range;
+                double y = (getElement(j, z) - minimum) / range;
+                double a = 0.1; //should maybe be a parameter
+                sum += (x + y)*a + (1-a)*(x-y)*(x-y);
+            }
+            
+            newMatrix.setElement(i, j, sum/_size);
+        }
+
+        if (i % 100 == 1) {
+            cout << "\rBuilding Kevins distance matrix: " << (int)(((double)i / _size) * 100) << "\% complete" << flush;
+        }
+    }
+    cout << "\rBuilding Kevins distance matrix: " << 100 << "\% complete!" << endl;
+    
+    return newMatrix;
+}
+
 SquareMatrix SquareMatrix::moransIDistanceMatrix()
 {
     moransI();
@@ -431,12 +464,12 @@ SquareMatrix SquareMatrix::moransIDistanceMatrix()
 
     double min = 0; // since we know we have '0' elements already
     double max = 0;
-    for (int i = 1; i < _size; i++) // start at 1 to account for extra node added
+    for (int i = 0; i < _size; i++)
     {
-        for (int j = 1; j < _size; j++)
+        for (int j = 0; j < _size; j++)
         {
             double sum = 0;
-            for (int z = 1; z < _size; z++)
+            for (int z = 0; z < _size; z++)
             {
                 sum += (getElement(i, z) - _morans_mean) * (getElement(j, z) - _morans_mean); // here a_{xy} = getElement(x,y) - _morans_mean
             }
@@ -640,6 +673,15 @@ void SquareMatrix::orderTSPMoransI() {
     //only this line is different for different orderings
     SquareMatrix distanceMatrix = moransIDistanceMatrix();
 
+    vector<int> extraOrder = distanceMatrix.getTSPOrder();
+    vector<int> normalOrder = extraNodeOrderToNormal(extraOrder);
+    order(normalOrder);
+}
+
+void SquareMatrix::orderTSPKevin() {
+    //only this line is different for different orderings
+    SquareMatrix distanceMatrix = KevinsDistanceMatrix();
+    
     vector<int> extraOrder = distanceMatrix.getTSPOrder();
     vector<int> normalOrder = extraNodeOrderToNormal(extraOrder);
     order(normalOrder);
