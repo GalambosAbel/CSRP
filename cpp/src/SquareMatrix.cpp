@@ -7,9 +7,7 @@
 #include <iomanip>
 #include <cstring>
 #include "SquareMatrix.h"
-
 #include <cfloat>
-
 #include "Image.h"
 #include "ColorScheme.h"
 #include "NEOSJob.h"
@@ -552,7 +550,7 @@ double SquareMatrix::moransI()
 
 double SquareMatrix::entropyScore() {
     double entropy = 0;
-    int seqLength = 1;
+    double seqLength = 1;
 
     for (int i = 1; i < getSize(); i++) {
         if (getMeaning(i - 1) == getMeaning(i)) seqLength++;
