@@ -142,7 +142,7 @@ void visualize(string inputFile, string outputFile) {
 }
 
 void score(string inputFile) {
-    SquareMatrixF distanceMatrix = GraphReader::loadDistanceMatrix(inputFile);
+    SquareMatrix distanceMatrix = GraphReader::loadDistanceMatrix(inputFile);
     cout << "The score of the current matrix ordering \"" << inputFile << "\" is: " << distanceMatrix.entropyScore() << " (lower is better)" << endl;
     cout << "The Moran's I of the matrix is: " << distanceMatrix.moransI() << endl;
 }
