@@ -1,1 +1,0 @@
-./csrp -e "abel.galambos@gmail.com" -i "../signature_dists/$1/layer_$2.in" -o "../out/$1/layer_$2.in" -v "../out/$1/layer_$2.png" -s -$3

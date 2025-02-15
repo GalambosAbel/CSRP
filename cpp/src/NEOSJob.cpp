@@ -176,16 +176,18 @@ vector<int> NEOSJob::submit() {
     int i = 0;
     while (status != "Done") {
         this_thread::sleep_for(chrono::milliseconds(250));
-        cout << "\b" << flush;
-        if (i % 4 == 0) {
-            cout << "|" << flush;
-        } else if (i % 4 == 1) {
-            cout << "/" << flush;
-        } else if (i % 4 == 2) {
-            cout << "-" << flush;
-        } else if (i % 4 == 3) {
-            cout << "\\" << flush;
-        }
+
+        // Loading animation - not good for logging
+        // cout << "\b" << flush;
+        // if (i % 4 == 0) {
+        //     cout << "|" << flush;
+        // } else if (i % 4 == 1) {
+        //     cout << "/" << flush;
+        // } else if (i % 4 == 2) {
+        //     cout << "-" << flush;
+        // } else if (i % 4 == 3) {
+        //     cout << "\\" << flush;
+        // }
 
         if (i % 4 == 0) {
             xmlrpc_c::value result_interm;

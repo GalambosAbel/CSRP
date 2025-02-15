@@ -15,21 +15,6 @@ void order(string inputFile, string outputFile, function<void(SquareMatrix&)> or
 void visualize(string inputFile, string outputFile);
 void score(string inputFile);
 
-// int discretizeIn(char* tspFileName, char* discreteTspFileName, int matrixSize, int numBuckets) {
-//     SquareMatrix distanceMatrix = GraphReader::readTsp_Explicit_FullMatrix(tspFileName);
-//
-//     for (int i = 0; i < matrixSize; i++)
-//     {
-//         for (int j = 0; j < matrixSize; j++)
-//         {
-//             distanceMatrix.setElement(i, j, round((distanceMatrix.getElement(i, j)/(distanceMatrix.getMaxValue() - distanceMatrix.getMinValue())) * (numBuckets - 1)));
-//         }
-//     }
-//
-//     distanceMatrix.toTspFullMatrix(discreteTspFileName);
-//     return 0;
-// }
-
 int main (int argc, char* argv[])
 {
     cxxopts::Options options("csrp", "Some tools for ordering distance matrices");
